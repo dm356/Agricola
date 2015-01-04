@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerInput : MonoBehaviour {
-	public Supply playerSupply;
+public class PlayerInput : Singleton<PlayerInput> {
+//	public Supply playerSupply;
 
 	// Use this for initialization
 	void Start () {
@@ -15,7 +15,7 @@ public class PlayerInput : MonoBehaviour {
 			if(Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition),out hit,1000f,1 << 9)){
 				DropPlayer handler = hit.collider.gameObject.GetComponent<DropPlayer>();
 				if(handler){
-					handler.Activate(playerSupply);
+					handler.Activate();
 				}
 			}
 		}

@@ -8,9 +8,9 @@ public class CollectResource : Action {
 		stock = GetComponent<StockResource>();
 	}
 
-	public override void Execute (Supply playerSupply)
+	public override void Execute ()
 	{
-		playerSupply.AddStock(stock.resource.GetComponent<Resource>().type,stock.Count);
+		Supply.AddStock(stock.resource.GetComponent<Resource>().type,stock.Count);
 		stock.ClearStock();
 	}
 }

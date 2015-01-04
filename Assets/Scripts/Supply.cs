@@ -3,14 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
-public class Supply : MonoBehaviour {
+public class Supply : Singleton<Supply> {
 	private Dictionary<Resource.ResourceType,int> stock;
 
 //	private List<GameObject> playerTokens;
 	public GameObject playerToken;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		stock = new Dictionary<Resource.ResourceType, int>();
 		foreach(Resource.ResourceType type in Enum.GetValues(typeof(Resource.ResourceType))){
 			stock[type] = 0;
@@ -23,17 +23,17 @@ public class Supply : MonoBehaviour {
 	
 	}
 
-	public GameObject GetPlayerToken(){
+	public static GameObject GetPlayerToken(){
 //		return playerTokens[index];
-		GameObject token = Instantiate(playerToken) as GameObject;
+		GameObject token = Instantiate(Instance.playerToken) as GameObject;
 		return token;
 	}
 
-	public int CheckStock(Resource.ResourceType resource){
-		return stock[resource];
+	public static int CheckStock(Resource.ResourceType resource){
+		return Instance.stock[resource];
 	}
 
-	public void AddStock(Resource.ResourceType resource, int amount){
-		stock[resource] += amount;
+	public static void AddStock(Resource.ResourceType resource, int amount){
+		Instance.stock[resource] += amount;
 	}
 }

@@ -13,5 +13,5 @@ public abstract class Action : MonoBehaviour {
 	
 	}
 
-	public abstract void Execute(Supply playerSupply);
+	public abstract void Execute();
 }
