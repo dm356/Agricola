@@ -30,7 +30,7 @@ public class StockResource : MonoBehaviour {
 	public void Restock(){
 		GameObject prefab = ResourceList.GetPrefab(resource);
 		GameObject token;
-		float height = 0;
+		float height = transform.position.y + collider.bounds.extents.y;
 		foreach(GameObject item in stock){
 			height = Mathf.Max(item.transform.position.y + 2f*item.collider.bounds.extents.y,height);
 		}

@@ -16,9 +16,9 @@ public class UI_ResourceCounter : MonoBehaviour {
 		if(token){
 			GameObject display_token = Instantiate(token) as GameObject;
 //			display_token.layer = 5; // set UI layer
-			display_token.SetLayerRecursively(5); // set UI layer
 			display_token.rigidbody.useGravity = false;
 			display_token.transform.SetParent(token_location);
+			display_token.SetLayerRecursively(5); // set UI layer
 		}
 	}
 	
