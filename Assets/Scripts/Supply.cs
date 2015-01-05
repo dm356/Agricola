@@ -5,6 +5,7 @@ using System;
 
 public class Supply : Singleton<Supply> {
 	private Dictionary<Resource.ResourceType,int> stock;
+	private int family_size = 0;
 
 //	private List<GameObject> playerTokens;
 	public GameObject playerToken;

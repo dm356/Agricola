@@ -3,12 +3,12 @@ using System.Collections;
 
 public class DropPlayer : MonoBehaviour {
 
-	private Transform drop_location;
+	public Transform drop_location;
 	private int player_count = 0;
 
 	// Use this for initialization
 	void Start () {
-		drop_location = transform.FindChild("PlayerStack");;
+//		drop_location = transform.FindChild("PlayerStack");;
 	}
 	
 	// Update is called once per frame

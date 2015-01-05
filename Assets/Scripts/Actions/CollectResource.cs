@@ -10,7 +10,7 @@ public class CollectResource : Action {
 
 	public override void Execute ()
 	{
-		Supply.AddStock(stock.resource.GetComponent<Resource>().type,stock.Count);
+		Supply.AddStock(stock.resource,stock.Count);
 		stock.ClearStock();
 	}
 }

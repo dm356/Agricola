@@ -4,10 +4,11 @@ using System.Collections.Generic;
 
 public class StockResource : MonoBehaviour {
 
-	private Transform drop_location;
-	public GameObject resource;
+	public List<Transform> drop_locations;
+	public Resource.ResourceType resource;
 	public int gain = 0;
 	private List<GameObject> stock;
+	private int drop_index = 0;
 
 	public int Count{
 		get{
@@ -18,7 +19,7 @@ public class StockResource : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		stock = new List<GameObject>();
-		drop_location = transform.FindChild("ResourceStack");
+//		drop_location = transform.FindChild("ResourceStack");
 	}
 	
 	// Update is called once per frame
@@ -27,12 +28,17 @@ public class StockResource : MonoBehaviour {
 	}
 
 	public void Restock(){
+		GameObject prefab = ResourceList.GetPrefab(resource);
 		GameObject token;
-		float height = resource.transform.lossyScale.y*(0.5f + 2f*((float) Count)) + 0.5f;
+		float height = 0;
+		foreach(GameObject item in stock){
+			height = Mathf.Max(item.transform.position.y + 2f*item.collider.bounds.extents.y,height);
+		}
+		height += 0.5f;
 		for(int i=0;i<gain;i++){
-			token = Instantiate(resource, drop_location.position + drop_location.up*height, drop_location.rotation) as GameObject;
+			token = GenerateToken(prefab, height) ;
+			height += token.collider.bounds.extents.y*2f;
 			stock.Add(token);
-			height += resource.transform.lossyScale.y*2f;
 		}
 	}
 
@@ -41,5 +47,12 @@ public class StockResource : MonoBehaviour {
 			Destroy(item);
 		}
 		stock.Clear();
+	}
+
+
+	GameObject GenerateToken(GameObject prefab, float height){
+		GameObject token = Instantiate(prefab, drop_locations[drop_index].position + drop_locations[drop_index].up*height, drop_locations[drop_index].rotation) as GameObject;
+		drop_index = (++drop_index) % drop_locations.Count;
+		return token;
 	}
 }
