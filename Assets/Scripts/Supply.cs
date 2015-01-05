@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System;
 
 public class Supply : Singleton<Supply> {
-	private Dictionary<Resource.ResourceType,int> stock;
+	public List<ResourceStorage> storage;
+
+//	private Stock stock;
 	private int family_size = 0;
 
 //	private List<GameObject> playerTokens;
@@ -12,10 +14,7 @@ public class Supply : Singleton<Supply> {
 
 	// Use this for initialization
 	void Awake () {
-		stock = new Dictionary<Resource.ResourceType, int>();
-		foreach(Resource.ResourceType type in Enum.GetValues(typeof(Resource.ResourceType))){
-			stock[type] = 0;
-		}
+//		stock = new Stock();
 //		playerTokens = new List<GameObject>();
 	}
 	
@@ -31,10 +30,27 @@ public class Supply : Singleton<Supply> {
 	}
 
 	public static int CheckStock(Resource.ResourceType resource){
-		return Instance.stock[resource];
+		foreach(ResourceStorage bank in Instance.storage){
+			if(bank.resource == resource){
+				return bank.Count;
+			}
+		}
+		return 0;
 	}
 
 	public static void AddStock(Resource.ResourceType resource, int amount){
-		Instance.stock[resource] += amount;
+		foreach(ResourceStorage bank in Instance.storage){
+			if(bank.resource == resource){
+				bank.AddStock(amount);
+			}
+		}
+	}
+
+	public static void AddStock(Resource.ResourceType resource, List<GameObject> tokens){
+		foreach(ResourceStorage bank in Instance.storage){
+			if(bank.resource == resource){
+				bank.AddStock(tokens);
+			}
+		}
 	}
 }

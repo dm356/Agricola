@@ -5,7 +5,6 @@ public class SnapToTarget : MonoBehaviour {
 
 	public Transform target;
 	public float speed_limit;
-	public float rotation_limit;
 
 	// Use this for initialization
 	void Start () {
@@ -15,8 +14,10 @@ public class SnapToTarget : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if(target){
-			transform.position = Vector3.Lerp(transform.position,target.position,speed_limit);
-			transform.rotation = Quaternion.Slerp(transform.rotation,target.rotation, rotation_limit);
+			float travel_time = (transform.position-target.position).magnitude/speed_limit;
+			float rotation_speed = Quaternion.Angle(transform.rotation,target.rotation)/travel_time;
+			transform.position = Vector3.MoveTowards(transform.position,target.position,speed_limit);
+			transform.rotation = Quaternion.RotateTowards(transform.rotation,target.rotation, rotation_speed);
 		}
 	}
 }

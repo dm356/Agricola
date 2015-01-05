@@ -3,9 +3,13 @@ using System.Collections;
 
 public class PlayerInput : Singleton<PlayerInput> {
 //	public Supply playerSupply;
+	public Transform main_viewpoint;
+	public Transform farm_viewpoint;
+	private SnapToTarget camera_control;
 
 	// Use this for initialization
 	void Start () {
+		camera_control = Camera.main.GetComponent<SnapToTarget>();
 	}
 	
 	// Update is called once per frame
@@ -27,6 +31,11 @@ public class PlayerInput : Singleton<PlayerInput> {
 					handler.Restock();
 				}
 			}
+		}
+		if(Input.GetAxis("Vertical") > 0f){
+			camera_control.target = main_viewpoint;
+		}else if(Input.GetAxis("Vertical") < -0f){
+			camera_control.target = farm_viewpoint;
 		}
 	}
 }

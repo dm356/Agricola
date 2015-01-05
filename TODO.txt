@@ -1,0 +1,5 @@
+Heirarchical ResourceStorage
+Top layer distributes incoming resources
+Lower layer keeps track of count per tower (and implements caps (for pastures and the like))
+
+Turn Manager
