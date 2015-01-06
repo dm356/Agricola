@@ -3,14 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class FamilyHandler : MonoBehaviour {
+	private List<TokenStorage> rooms;
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+	void Start(){
+		rooms = new List<TokenStorage>();
+		TokenStorage storage;
+		foreach(Transform child in transform){
+			storage = child.GetComponent<TokenStorage>();
+			if(storage){
+				rooms.Add(storage);
+			}
+		}
 	}
 }

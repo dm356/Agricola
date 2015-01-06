@@ -34,7 +34,7 @@ public class Supply : Singleton<Supply> {
 		if(Instance.storage.ContainsKey(resource)){
 			return Instance.storage[resource].Count;
 		}else{
-			Debug.Log("Supply.CheckStock ERROR: Resource missing");
+//			Debug.Log("Supply.CheckStock ERROR: Resource missing");
 			return 0;
 		}
 	}

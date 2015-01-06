@@ -3,13 +3,13 @@ using System.Collections;
 
 public class DropPlayer : MonoBehaviour {
 
-	private TokenStorage storage;
+	private AbstractStorage storage;
 	private Action action;
 
 	// Use this for initialization
 	void Start () {
 		foreach(Transform child in transform){
-			storage = child.GetComponent<TokenStorage>();
+			storage = child.GetComponent<AbstractStorage>();
 			if(storage)
 				break;
 		}

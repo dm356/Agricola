@@ -8,6 +8,7 @@ public class PlayerInput : Singleton<PlayerInput> {
 	private SnapToTarget camera_control;
 	private int action_layer;
 	private int storage_layer;
+	private bool debug_mode = true;
 
 	// Use this for initialization
 	void Start () {
