@@ -3,12 +3,17 @@ using System.Collections;
 
 public class DropPlayer : MonoBehaviour {
 
-	public Transform drop_location;
-	private int player_count = 0;
+	private TokenStorage storage;
+	private Action action;
 
 	// Use this for initialization
 	void Start () {
-//		drop_location = transform.FindChild("PlayerStack");;
+		foreach(Transform child in transform){
+			storage = child.GetComponent<TokenStorage>();
+			if(storage)
+				break;
+		}
+		action = GetComponent<Action>();
 	}
 	
 	// Update is called once per frame
@@ -18,13 +23,8 @@ public class DropPlayer : MonoBehaviour {
 
 	public void Activate(){
 		GameObject token = Supply.GetPlayerToken();
-		float height = token.transform.lossyScale.y*(0.5f + 2f*((float) player_count)) + 0.5f;
-		token.transform.position = drop_location.position + drop_location.up*height;
-		token.transform.rotation = drop_location.rotation;
+		storage.AddStock(token);
 
-		player_count += 1;
-
-		Action action = GetComponent<Action>();
 		if(action){
 			action.Execute();
 		}

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System;
 
 public class Supply : Singleton<Supply> {
-	public List<ResourceStorage> storage;
+	private Dictionary<Resource.ResourceType,ResourceStorage> storage;
 
 //	private Stock stock;
 	private int family_size = 0;
@@ -13,14 +13,15 @@ public class Supply : Singleton<Supply> {
 	public GameObject playerToken;
 
 	// Use this for initialization
-	void Awake () {
-//		stock = new Stock();
-//		playerTokens = new List<GameObject>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+	void Start () {
+		storage = new Dictionary<Resource.ResourceType, ResourceStorage>();
+		ResourceStorage s;
+		foreach(Transform child in transform){
+			s = child.GetComponent<ResourceStorage>();
+			if(s){
+				storage[s.resource] = s;
+			}
+		}
 	}
 
 	public static GameObject GetPlayerToken(){
@@ -30,27 +31,34 @@ public class Supply : Singleton<Supply> {
 	}
 
 	public static int CheckStock(Resource.ResourceType resource){
-		foreach(ResourceStorage bank in Instance.storage){
-			if(bank.resource == resource){
-				return bank.Count;
-			}
+		if(Instance.storage.ContainsKey(resource)){
+			return Instance.storage[resource].Count;
+		}else{
+			Debug.Log("Supply.CheckStock ERROR: Resource missing");
+			return 0;
 		}
-		return 0;
 	}
 
 	public static void AddStock(Resource.ResourceType resource, int amount){
-		foreach(ResourceStorage bank in Instance.storage){
-			if(bank.resource == resource){
-				bank.AddStock(amount);
-			}
+		if(Instance.storage.ContainsKey(resource)){
+			Instance.storage[resource].AddStock(amount);
+		}else{
+			Debug.Log("Supply.AddStock ERROR: Resource missing");
+		}
+	}
+	
+	public static void AddStock(GameObject token){
+		Resource.ResourceType resource = token.GetComponent<Resource>().type;
+		if(Instance.storage.ContainsKey(resource)){
+			Instance.storage[resource].AddStock(token);
+		}else{
+			Debug.Log("Supply.AddStock ERROR: Resource missing");
 		}
 	}
 
-	public static void AddStock(Resource.ResourceType resource, List<GameObject> tokens){
-		foreach(ResourceStorage bank in Instance.storage){
-			if(bank.resource == resource){
-				bank.AddStock(tokens);
-			}
+	public static void AddStock(List<GameObject> tokens){
+		foreach(GameObject token in tokens){
+			AddStock(token);
 		}
 	}
 }

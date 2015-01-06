@@ -5,11 +5,15 @@ public class CollectResource : Action {
 	private StockResource stock;
 
 	void Start() {
-		stock = GetComponent<StockResource>();
+		foreach(Transform child in transform){
+			stock = child.GetComponent<StockResource>();
+			if(stock)
+				break;
+		}
 	}
 
 	public override void Execute ()
 	{
-		Supply.AddStock(stock.resource,stock.PullAll());
+		Supply.AddStock(stock.PullAll());
 	}
 }
