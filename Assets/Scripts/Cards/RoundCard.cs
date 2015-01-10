@@ -1,15 +1,23 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public abstract class RoundCard : MonoBehaviour {
+public class RoundCard : ActionSpace {
 
-	// Use this for initialization
-	void Start () {
-	
+	private bool active;
+	public MeshRenderer model;
+	public Material card_face;
+
+	public virtual void Activate(){
+		if(!active){
+			model.material = card_face;
+			active = true;
+		}
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+
+	public override void ExecuteAction ()
+	{
+		if(active){
+			base.ExecuteAction ();
+		}
 	}
 }

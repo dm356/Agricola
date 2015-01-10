@@ -10,13 +10,13 @@ public class PlayerSupply : AbstractStorage {
 
 	void Awake(){
 		storage = new Dictionary<Resource.ResourceType, ResourceStorage>();
-		spawnStorage(Resource.ResourceType.Wood,3f*spacing);
-		spawnStorage(Resource.ResourceType.Clay,2f*spacing);
-		spawnStorage(Resource.ResourceType.Stone,1f*spacing);
+		spawnStorage(Resource.ResourceType.Wood,-3f*spacing);
+		spawnStorage(Resource.ResourceType.Clay,-2f*spacing);
+		spawnStorage(Resource.ResourceType.Stone,-1f*spacing);
 		spawnStorage(Resource.ResourceType.Reed,0f*spacing);
-		spawnStorage(Resource.ResourceType.Grain,-1f*spacing);
-		spawnStorage(Resource.ResourceType.Vegetable,-2f*spacing);
-		spawnStorage(Resource.ResourceType.Food,-3f*spacing);
+		spawnStorage(Resource.ResourceType.Grain,1f*spacing);
+		spawnStorage(Resource.ResourceType.Vegetable,2f*spacing);
+		spawnStorage(Resource.ResourceType.Food,3f*spacing);
 	}
 
 	void spawnStorage(Resource.ResourceType resource, float x){
@@ -36,6 +36,7 @@ public class PlayerSupply : AbstractStorage {
 		if(storage.ContainsKey(resource)){
 			storage[resource].AddStock(token);
 		}else{
+			Destroy(token);
 			Debug.Log("PlayerSupply.AddStock ERROR: Resource missing");
 		}
 	}

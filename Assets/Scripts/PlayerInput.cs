@@ -22,9 +22,9 @@ public class PlayerInput : Singleton<PlayerInput> {
 		if(Input.GetMouseButtonDown(0)){
 			RaycastHit hit;
 			if(Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition),out hit,1000f,1 << action_layer)){
-				DropPlayer handler = hit.collider.gameObject.GetComponent<DropPlayer>();
+				ActionSpace handler = hit.collider.gameObject.GetComponent<ActionSpace>();
 				if(handler){
-					handler.Activate();
+					handler.ExecuteAction();
 				}
 			}
 		}
@@ -34,6 +34,15 @@ public class PlayerInput : Singleton<PlayerInput> {
 				StockResource handler = hit.collider.gameObject.GetComponent<StockResource>();
 				if(handler){
 					handler.Restock();
+				}
+			}
+		}
+		if(Input.GetMouseButtonDown(2)){
+			RaycastHit hit;
+			if(Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition),out hit,1000f,1 << action_layer)){
+				RoundCard handler = hit.collider.gameObject.GetComponent<RoundCard>();
+				if(handler){
+					handler.Activate();
 				}
 			}
 		}
