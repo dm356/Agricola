@@ -19,6 +19,16 @@ public class PlayerInput : Singleton<PlayerInput> {
 	
 	// Update is called once per frame
 	void Update () {
+		DebugActions();
+
+		if(Input.GetAxis("Vertical") > 0f){
+			camera_control.target = main_viewpoint;
+		}else if(Input.GetAxis("Vertical") < -0f){
+			camera_control.target = farm_viewpoint;
+		}
+	}
+
+	void DebugActions(){
 		if(Input.GetMouseButtonDown(0)){
 			RaycastHit hit;
 			if(Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition),out hit,1000f,1 << action_layer)){
@@ -46,10 +56,9 @@ public class PlayerInput : Singleton<PlayerInput> {
 				}
 			}
 		}
-		if(Input.GetAxis("Vertical") > 0f){
-			camera_control.target = main_viewpoint;
-		}else if(Input.GetAxis("Vertical") < -0f){
-			camera_control.target = farm_viewpoint;
+
+		if(Input.GetKeyDown("n")){
+			TurnManager.NextRound();
 		}
 	}
 }
