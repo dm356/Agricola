@@ -6,15 +6,14 @@ public class PlayerInput : Singleton<PlayerInput> {
 	public Transform main_viewpoint;
 	public Transform farm_viewpoint;
 	private SnapToTarget camera_control;
-	private int action_layer;
-	private int storage_layer;
+	public LayerMask clickables;
+	public LayerMask storage;
+
 	private bool debug_mode = true;
 
 	// Use this for initialization
 	void Start () {
 		camera_control = Camera.main.GetComponent<SnapToTarget>();
-		action_layer = LayerMask.NameToLayer("actions");
-		storage_layer = LayerMask.NameToLayer("storage");
 	}
 	
 	// Update is called once per frame
@@ -31,7 +30,7 @@ public class PlayerInput : Singleton<PlayerInput> {
 	void DebugActions(){
 		if(Input.GetMouseButtonDown(0)){
 			RaycastHit hit;
-			if(Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition),out hit,1000f,1 << action_layer)){
+			if(Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition),out hit,1000f,clickables)){
 				ActionSpace handler = hit.collider.gameObject.GetComponent<ActionSpace>();
 				if(handler){
 					handler.ExecuteAction();
@@ -40,19 +39,10 @@ public class PlayerInput : Singleton<PlayerInput> {
 		}
 		if(Input.GetMouseButtonDown(1)){
 			RaycastHit hit;
-			if(Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition),out hit,1000f,1 << storage_layer)){
+			if(Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition),out hit,1000f,storage)){
 				StockResource handler = hit.collider.gameObject.GetComponent<StockResource>();
 				if(handler){
 					handler.Restock();
-				}
-			}
-		}
-		if(Input.GetMouseButtonDown(2)){
-			RaycastHit hit;
-			if(Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition),out hit,1000f,1 << action_layer)){
-				RoundCard handler = hit.collider.gameObject.GetComponent<RoundCard>();
-				if(handler){
-					handler.Activate();
 				}
 			}
 		}

@@ -8,6 +8,7 @@ public class House : MonoBehaviour {
 	private List<Room> rooms;
 	public FarmGrid grid;
 	public GameObject roomPrefab;
+	public GameObject selectabelPrefab;
 	private HouseType _type;
 
 	public HouseType type{
@@ -25,6 +26,7 @@ public class House : MonoBehaviour {
 	void Start(){
 		rooms = new List<Room>();
 		SetupInitialHouse();
+		grid.setAllSelectable();
 	}
 
 	void SetupInitialHouse(){
