@@ -14,10 +14,10 @@ public class RoundCard : ActionSpace {
 		}
 	}
 
-	public override void ExecuteAction ()
+	public override void SetupAction ()
 	{
 		if(active){
-			base.ExecuteAction ();
+			base.SetupAction ();
 		}
 	}
 }

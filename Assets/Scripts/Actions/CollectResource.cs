@@ -2,14 +2,19 @@
 using System.Collections;
 
 public class CollectResource : Action {
-	private StockResource stock;
+	public StockResource stock;
 
-	void Start() {
-		foreach(Transform child in transform){
-			stock = child.GetComponent<StockResource>();
-			if(stock)
-				break;
-		}
+//	void Start() {
+//		foreach(Transform child in transform){
+//			stock = child.GetComponent<StockResource>();
+//			if(stock)
+//				break;
+//		}
+//	}
+
+	public override void Setup ()
+	{
+		Interface.setModifier(stock.resource,stock.Count);
 	}
 
 	public override void Execute ()

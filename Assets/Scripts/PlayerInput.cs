@@ -8,6 +8,10 @@ public class PlayerInput : Singleton<PlayerInput> {
 	private SnapToTarget camera_control;
 	public LayerMask clickables;
 	public LayerMask storage;
+	public LayerMask UI_clickables;
+	public Camera UI_camera;
+	public Transform test_sphere;
+	public Transform test_sphere2;
 
 	private bool debug_mode = true;
 
@@ -33,7 +37,16 @@ public class PlayerInput : Singleton<PlayerInput> {
 			if(Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition),out hit,1000f,clickables)){
 				ActionSpace handler = hit.collider.gameObject.GetComponent<ActionSpace>();
 				if(handler){
-					handler.ExecuteAction();
+					handler.SetupAction();
+				}
+			}
+			Debug.Log(UI_camera.ScreenPointToRay(Input.mousePosition).origin);
+			test_sphere.position = UI_camera.ScreenPointToRay(Input.mousePosition).origin;
+			test_sphere2.position = UI_camera.ScreenPointToRay(Input.mousePosition).origin + UI_camera.ScreenPointToRay(Input.mousePosition).direction;
+			if(Physics.Raycast(UI_camera.ScreenPointToRay(Input.mousePosition),out hit,1000f,UI_clickables)){
+				UI_Action handler = hit.collider.gameObject.GetComponent<UI_Action>();
+				if(handler){
+					handler.Execute();
 				}
 			}
 		}

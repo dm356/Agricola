@@ -15,5 +15,7 @@ public abstract class Action : MonoBehaviour {
 	
 	}
 
+	public virtual void Setup(){}
+
 	public abstract void Execute();
 }
