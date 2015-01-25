@@ -7,16 +7,17 @@ public class Interface : Singleton<Interface> {
 	public GameObject confirm_prefab;
 	public Transform confirm_location;
 	private Dictionary<Resource.ResourceType,int> modifier_amounts;
+	public bool confirmed;
+	public bool cancelled;
 
 	public void Awake(){
 		modifier_amounts = new Dictionary<Resource.ResourceType, int>();
 		resetModifiers();
 	}
 
-	static public GameObject awaitConfirmation(){
+	static public void awaitConfirmation(){
 		GameObject button = Instantiate(Instance.confirm_prefab,Instance.confirm_location.position,Instance.confirm_location.rotation) as GameObject;
 		button.transform.parent = Instance.transform;
-		return button;
 	}
 
 	static public void setModifier(Resource.ResourceType resource, int amount){
