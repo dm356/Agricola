@@ -1,9 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Room : MonoBehaviour {
-
-
+public class Room : RecursiveStorage {
 
 	private House.HouseType _type;
 	public MeshRenderer model;

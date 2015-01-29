@@ -28,7 +28,7 @@ public class UI_ResourceCounter : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		display.text = Supply.CheckStock(resource).ToString();
+		display.text = PlayerHandler.ActivePlayerResourceCount(resource).ToString();
 		int m = Interface.getModifier(resource);
 		if(m > 0){
 			modifier.text = "+";

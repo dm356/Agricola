@@ -19,6 +19,6 @@ public class CollectResource : Action {
 
 	public override void Execute ()
 	{
-		Supply.AddStock(stock.PullAll());
+		PlayerHandler.CurrentPlayerAddStock(stock.PullAll());
 	}
 }

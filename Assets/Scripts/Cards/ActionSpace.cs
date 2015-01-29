@@ -6,13 +6,18 @@ public class ActionSpace : MonoBehaviour {
 	public AbstractStorage player_stack;
 	public Action activated_action;
 
+	public bool Occupied{
+		get{
+			return player_stack.Count > 0;
+		}
+	}
+
 	public virtual void SetupAction(){
 		Interface.awaitConfirmation(this);
 		if(activated_action){
 			activated_action.Setup();
 		}
-		GameObject token = Supply.GetPlayerToken();
-		player_stack.AddStock(token);
+		player_stack.AddStock(PlayerHandler.GetCurrentPlayerToken());
 	}
 
 	public virtual void ExecuteAction(){

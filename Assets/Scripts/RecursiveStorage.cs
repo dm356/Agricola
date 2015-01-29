@@ -16,7 +16,7 @@ public class RecursiveStorage : AbstractStorage {
 		}
 	}
 	
-	void Start () {
+	void Awake () {
 		storage_list = new List<AbstractStorage>();
 		AbstractStorage storage;
 		foreach(Transform child in transform){
