@@ -20,4 +20,11 @@ public class RoundCard : ActionSpace {
 			base.SetupAction ();
 		}
 	}
+
+	public override void RoundSetup ()
+	{
+		if(active){
+			base.RoundSetup ();
+		}
+	}
 }

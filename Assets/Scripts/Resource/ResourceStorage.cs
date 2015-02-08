@@ -7,11 +7,15 @@ public class ResourceStorage : RecursiveStorage {
 	public Resource.ResourceType resource;
 	
 	public void AddStock(int amount){
-		GameObject prefab = ResourceList.GetPrefab(resource);
-		GameObject token;
-		for(int i=0;i<amount;i++){
-			token = Instantiate(prefab) as GameObject;
-			AddStock(token);
+		if(amount > 0){
+			GameObject prefab = ResourceList.GetPrefab(resource);
+			GameObject token;
+			for(int i=0;i<amount;i++){
+				token = Instantiate(prefab) as GameObject;
+				AddStock(token);
+			}
+		}else if(amount < 0){
+			RemoveTokens(-amount);
 		}
 	}
 

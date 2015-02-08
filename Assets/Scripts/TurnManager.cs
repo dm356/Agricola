@@ -8,12 +8,27 @@ public class TurnManager : Singleton<TurnManager> {
 	private int current_round = 0;
 	private int current_stage = 0;
 	public int num_players = 0;
+	private int starting_player = 0;
 	public List<Stage> stages;
 
 	public static int CurrentPlayer{
 		get{
 			return Instance.current_player;
 		}
+	}
+
+	public static int StartingPlayer{
+		get{
+			return Instance.starting_player;
+		}
+
+		set{
+			Instance.starting_player = value;
+		}
+	}
+
+	void Start(){
+		NextRound();
 	}
 
 	public static int round{
@@ -29,10 +44,17 @@ public class TurnManager : Singleton<TurnManager> {
 	}
 
 	public static void CyclePlayers(){
-		Instance.current_player += 1;
-		if(Instance.current_player > Instance.num_players-1){
-			Instance.current_player = 0;
-		}
+		do{
+			Instance.current_player += 1;
+			if(Instance.current_player > Instance.num_players-1){
+				Instance.current_player = 0;
+				if(PlayerHandler.AllPlayersRoundFinished()){
+					ClearRound();
+					return;
+				}
+			}
+		}while(PlayerHandler.CurrentPlayerRoundFinished());
+
 		if(Instance.current_player == PlayerInput.Id){
 			PlayerInput.SetFlag(PlayerInput.InputState.PlaceToken,true);
 		}
@@ -46,8 +68,28 @@ public class TurnManager : Singleton<TurnManager> {
 
 		Instance.stages[Instance.current_stage-1].Activate(Instance.current_round);
 
+		ActionSpace action;
+		foreach(GameObject o in GameObject.FindGameObjectsWithTag("Actions")){
+			action = o.GetComponent<ActionSpace>();
+			if(action)
+				action.RoundSetup();
+		}
+
+		Instance.current_player = Instance.starting_player;
+
 		if(Instance.current_player == PlayerInput.Id){
 			PlayerInput.SetFlag(PlayerInput.InputState.PlaceToken,true);
 		}
+	}
+
+	public static void ClearRound(){
+		ActionSpace action;
+		foreach(GameObject o in GameObject.FindGameObjectsWithTag("Actions")){
+			action = o.GetComponent<ActionSpace>();
+			if(action)
+				action.RoundClear();
+		}
+
+		NextRound();
 	}
 }

@@ -73,7 +73,6 @@ public class PlayerInput : Singleton<PlayerInput> {
 				ActionSpace handler = hit.collider.gameObject.GetComponent<ActionSpace>();
 				if(handler && !handler.Occupied){
 					handler.SetupAction();
-					SetFlag(InputState.PlaceToken, false);
 				}
 			}
 		}
@@ -83,9 +82,9 @@ public class PlayerInput : Singleton<PlayerInput> {
 		if(Input.GetMouseButtonDown(0)){
 			RaycastHit hit;
 			if(Physics.Raycast(UI_camera.ScreenPointToRay(Input.mousePosition),out hit,1000f,UI_clickables)){
-				UI_Action handler = hit.collider.gameObject.GetComponent<UI_Action>();
+				UI_Button handler = hit.collider.gameObject.GetComponent<UI_Button>();
 				if(handler){
-					handler.Execute();
+					handler.Clicked = true;
 				}
 			}
 		}

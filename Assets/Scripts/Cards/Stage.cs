@@ -8,7 +8,7 @@ public class Stage : MonoBehaviour {
 	public int first_round;
 	private List<RoundCard> rounds;
 
-	void Start(){
+	void Awake(){
 		Deal();
 	}
 

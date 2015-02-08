@@ -3,6 +3,8 @@ using System.Collections;
 
 public abstract class Action : MonoBehaviour {
 
+	public string name = "";
+
 	private bool awaiting_confirmation = false;
 
 	// Use this for initialization
@@ -15,7 +17,9 @@ public abstract class Action : MonoBehaviour {
 	
 	}
 
-	public virtual void Setup(){}
+	public virtual void Setup(){Interface.ShowButtons(true);}
 
 	public abstract void Execute();
+
+	public virtual void RoundSetup(){}
 }

@@ -7,8 +7,20 @@ public class PlayerFarm : MonoBehaviour {
 	public House house;
 	public PlayerSupply supply;
 
+	public int FamilyCount(){
+		return house.Count;
+	}
+
 	public GameObject TakeFamily(){
-		return house.PullToken();
+		if(FamilyCount() > 0){
+			return house.PullToken();
+		}else{
+			return null;
+		}
+	}
+
+	public void AddFamily(GameObject token){
+		house.AddStock(token);
 	}
 
 	public int ResourceCount(Resource.ResourceType resource){
@@ -17,5 +29,9 @@ public class PlayerFarm : MonoBehaviour {
 
 	public void AddResources(List<GameObject> tokens){
 		supply.AddStock(tokens);
+	}
+
+	public void AddResources(Resource.ResourceType resource, int amount){
+		supply.AddResources(resource,amount);
 	}
 }

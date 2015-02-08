@@ -9,7 +9,7 @@ public class House : AbstractStorage {
 	private List<Room> rooms;
 	public FarmGrid grid;
 	public GameObject roomPrefab;
-	public GameObject selectabelPrefab;
+//	public GameObject selectabelPrefab;
 	private HouseType _type;
 
 	public HouseType type{

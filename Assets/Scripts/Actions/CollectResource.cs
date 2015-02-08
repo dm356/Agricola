@@ -15,10 +15,16 @@ public class CollectResource : Action {
 	public override void Setup ()
 	{
 		Interface.setModifier(stock.resource,stock.Count);
+		base.Setup();
 	}
 
 	public override void Execute ()
 	{
 		PlayerHandler.CurrentPlayerAddStock(stock.PullAll());
+	}
+
+	public override void RoundSetup ()
+	{
+		stock.Restock();
 	}
 }

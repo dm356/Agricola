@@ -18,6 +18,7 @@ public class ActionSpace : MonoBehaviour {
 			activated_action.Setup();
 		}
 		player_stack.AddStock(PlayerHandler.GetCurrentPlayerToken());
+		PlayerInput.SetFlag(PlayerInput.InputState.PlaceToken, false);
 	}
 
 	public virtual void ExecuteAction(){
@@ -27,6 +28,18 @@ public class ActionSpace : MonoBehaviour {
 	}
 
 	public void CancelAction(){
-		player_stack.RemoveTokens(1);
+		PlayerHandler.ReturnFamily(player_stack.PullToken());
+	}
+
+	public virtual void RoundSetup(){
+		if(activated_action){
+			activated_action.RoundSetup();
+		}
+	}
+
+	public virtual void RoundClear(){
+		foreach(GameObject token in player_stack.PullAll()){
+			PlayerHandler.ReturnFamily(token);
+		}
 	}
 }
