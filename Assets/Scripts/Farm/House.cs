@@ -35,9 +35,24 @@ public class House : AbstractStorage {
 //		grid.setAllSelectable();
 	}
 
+	void Update(){
+		foreach(Selectable selectable in selectables){
+			if(selectable.Clicked){
+				if(selectable.Selected){
+					selectable.Selected = false;
+				}else{
+					GameObject s_obj = selectable.SpawnVisual(room_prefab);
+					s_obj.GetComponent<Room>().type = type;
+					selectable.Selected = true;
+				}
+			}
+		}
+	}
+
 	void SetupInitialHouse(){
 		spawnRoom(0,0);
 		spawnRoom(1,0);
+		type = HouseType.Wood;
 		addFamily(2);
 	}
 
