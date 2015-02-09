@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Enum = System.Enum;
 
 public class ActionSpace : MonoBehaviour {
 
@@ -9,6 +10,12 @@ public class ActionSpace : MonoBehaviour {
 	public bool Occupied{
 		get{
 			return player_stack.Count > 0;
+		}
+	}
+
+	public virtual bool Valid{
+		get{
+			return activated_action.Valid;
 		}
 	}
 
@@ -28,6 +35,7 @@ public class ActionSpace : MonoBehaviour {
 	}
 
 	public void CancelAction(){
+		activated_action.Cancel();
 		PlayerHandler.ReturnFamily(player_stack.PullToken());
 	}
 

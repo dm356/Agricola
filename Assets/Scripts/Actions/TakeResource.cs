@@ -5,6 +5,15 @@ public class TakeResource : Action {
 	public Resource.ResourceType resource;
 	public int amount;
 
+	public override bool Valid {
+		get {
+			if(PlayerHandler.ActivePlayerResourceCount(resource) + amount < 0){
+				return false;
+			}
+			return base.Valid;
+		}
+	}
+
 	public override void Setup ()
 	{
 		Interface.setModifier(resource,amount);

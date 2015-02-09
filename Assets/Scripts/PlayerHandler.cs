@@ -18,6 +18,12 @@ public class PlayerHandler : Singleton<PlayerHandler> {
 		return true;
 	}
 
+	public static House CurrentPlayerHouse{
+		get{
+			return Instance.farms[TurnManager.CurrentPlayer].house;
+		}
+	}
+
 	public static Transform FarmView(int player){
 		return Instance.farms[player].farm_view;
 	}
@@ -37,10 +43,6 @@ public class PlayerHandler : Singleton<PlayerHandler> {
 	public static void CurrentPlayerAddResources(Resource.ResourceType resource, int amount){
 		Instance.farms[TurnManager.CurrentPlayer].AddResources(resource,amount);
 	}
-
-//	public static void CurrentPlayerReturnFamily(GameObject token){
-//		Instance.farms[TurnManager.CurrentPlayer].AddFamily(token);
-//	}
 
 	public static void ReturnFamily(GameObject token){
 		PlayerToken pt = token.GetComponent<PlayerToken>();

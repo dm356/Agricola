@@ -5,6 +5,16 @@ using System.Collections.Generic;
 public class CombinationAction : Action {
 	public List<Action> actions;
 
+	public override bool Valid {
+		get {
+			bool v = true;
+			foreach(Action action in actions){
+				v = v && action.Valid;
+			}
+			return v;
+		}
+	}
+
 	public override void Execute ()
 	{
 		foreach(Action action in actions){

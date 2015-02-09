@@ -126,4 +126,12 @@ public class PlayerInput : Singleton<PlayerInput> {
 	bool CheckFlags(InputState flag){
 		return (input_state & flag) == flag;
 	}
+
+	static public void ShowPlayerFarm(int player){
+		Instance.camera_control.target = PlayerHandler.FarmView(player);
+	}
+
+	static public void ShowCurrentPlayerFarm(){
+		ShowPlayerFarm(TurnManager.CurrentPlayer);
+	}
 }

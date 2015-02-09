@@ -47,7 +47,7 @@ public class FarmGrid : MonoBehaviour {
 	}
 
 	public void setSelectable(int row, int col){
-		if(checkBounds(row,col) && grid[row,col].type == Tile.TileType.None){
+		if(checkBounds(row,col)){
 			GameObject s = Instantiate(selectablePrefab,gridPoint(row,col),Quaternion.identity) as GameObject;
 			selectables.Add(s);
 		}
@@ -60,6 +60,28 @@ public class FarmGrid : MonoBehaviour {
 			}
 		}
 	}
+
+	public Tile.TileType CheckType(int row, int col){
+		if(checkBounds(row,col)){
+			return grid[row,col].type;
+		}else{
+			return Tile.TileType.None;
+		}
+	}
+
+//	public List<GameObject> Populate(GameObject prefab, Tile.TileType flag){
+//		GameObject s;
+//		List<GameObject> list = new List<GameObject>();
+//		for(int i=0;i<3;i++){
+//			for(int j=0;j<5;j++){
+//				if((grid[i,j].type & flag) == grid[i,j].type){
+//					s = Instantiate(prefab,gridPoint(i,j),Quaternion.identity) as GameObject;
+//					list.Add(s);
+//				}
+//			}
+//		}
+//		return list;
+//	}
 	
 	public void destroySelectables(){
 		foreach(GameObject s in selectables){

@@ -17,6 +17,7 @@ public class Interface : Singleton<Interface> {
 		ShowButtons(false);
 		resetModifiers();
 		TurnManager.CyclePlayers();
+		Instance.waitingAction = null;
 	}
 
 	static public void Cancel(){
@@ -25,6 +26,7 @@ public class Interface : Singleton<Interface> {
 		resetModifiers();
 		// Allow player to place token again
 		PlayerInput.SetFlag(PlayerInput.InputState.PlaceToken, true);
+		Instance.waitingAction = null;
 	}
 
 	static public Transform WindowLocation{
@@ -44,6 +46,9 @@ public class Interface : Singleton<Interface> {
 	}
 
 	void Update(){
+		if(waitingAction){
+			confirm.Active = waitingAction.Valid;
+		}
 		if(confirm.Clicked){
 			Confirm();
 		}else if(cancel.Clicked){

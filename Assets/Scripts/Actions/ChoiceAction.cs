@@ -11,6 +11,12 @@ public class ChoiceAction : Action {
 
 	private int selected_action = 0;
 
+	public override bool Valid {
+		get {
+			return actions[selected_action].Valid;
+		}
+	}
+
 	public override void Execute ()
 	{
 		actions[selected_action].Execute();

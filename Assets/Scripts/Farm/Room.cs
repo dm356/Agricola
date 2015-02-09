@@ -9,6 +9,11 @@ public class Room : RecursiveStorage {
 	public Material clay;
 	public Material stone;
 
+	[HideInInspector]
+	public int x;
+	[HideInInspector]
+	public int y;
+
 	public House.HouseType type{
 		get{
 			return _type;
