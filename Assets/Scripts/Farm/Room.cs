@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Room : RecursiveStorage {
 
-	private House.HouseType _type;
+	private Resource.ResourceType _type;
 	public MeshRenderer model;
 	public Material wood;
 	public Material clay;
@@ -14,17 +14,17 @@ public class Room : RecursiveStorage {
 	[HideInInspector]
 	public int y;
 
-	public House.HouseType type{
+	public Resource.ResourceType type{
 		get{
 			return _type;
 		}
 		set{
 			_type = value;
-			if(value == House.HouseType.Wood){
+			if(value == Resource.ResourceType.Wood){
 				model.material = wood;
-			}else if(value == House.HouseType.Clay){
+			}else if(value == Resource.ResourceType.Clay){
 				model.material = clay;
-			}else if(value == House.HouseType.Stone){
+			}else if(value == Resource.ResourceType.Stone){
 				model.material = stone;
 			}
 		}

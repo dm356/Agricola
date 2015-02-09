@@ -3,20 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class House : AbstractStorage {
-	public enum HouseType {Wood,Clay,Stone}
+//	public enum HouseType {Wood,Clay,Stone}
 	public GameObject player_token;
 
 	private List<Room> rooms;
 	public FarmGrid grid;
 	public GameObject room_prefab;
 //	public GameObject selectabelPrefab;
-	private HouseType _type;
+	private Resource.ResourceType _type;
 
 	public GameObject selectable_prefab;
 	private List<Selectable> selectables;
 	private GameObject temp_housing;
 
-	public HouseType type{
+	public Resource.ResourceType type{
 		get{
 			return _type;
 		}
@@ -52,7 +52,7 @@ public class House : AbstractStorage {
 	void SetupInitialHouse(){
 		spawnRoom(0,0);
 		spawnRoom(1,0);
-		type = HouseType.Wood;
+		type = Resource.ResourceType.Wood;
 		addFamily(2);
 	}
 
