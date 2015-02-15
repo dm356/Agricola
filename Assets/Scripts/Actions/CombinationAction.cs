@@ -36,4 +36,11 @@ public class CombinationAction : Action {
 			action.RoundSetup();
 		}
 	}
+
+	public override void Cancel ()
+	{
+		foreach(Action action in actions){
+			action.Cancel();
+		}
+	}
 }

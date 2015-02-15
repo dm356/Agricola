@@ -29,6 +29,18 @@ public class ChoiceAction : Action {
 		UI_SelectionWindow window = window_instance.GetComponent<UI_SelectionWindow>();
 		window.BuildSelectables(actions);
 	}
+
+	public override void RoundSetup ()
+	{
+		foreach(Action action in actions){
+			action.RoundSetup();
+		}
+	}
+
+	public override void Cancel ()
+	{
+		actions[selected_action].Cancel();
+	}
 	
 	// Update is called once per frame
 	void Update () {

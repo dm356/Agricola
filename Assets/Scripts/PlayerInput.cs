@@ -10,6 +10,7 @@ public class PlayerInput : Singleton<PlayerInput> {
 	public LayerMask clickables;
 	public LayerMask storage;
 	public LayerMask UI_clickables;
+	public LayerMask farm_spaces;
 	public Camera UI_camera;
 	public Transform test_sphere;
 	public Transform test_sphere2;
@@ -22,7 +23,8 @@ public class PlayerInput : Singleton<PlayerInput> {
 		NullState = 0x0,
 		PlaceToken = 0x1,
 		ViewChange = 0x2,
-		UIAction = 0x4
+		UIAction = 0x4,
+		FarmAction = 0x8
 	}
 
 	private InputState input_state = InputState.ViewChange | InputState.UIAction;
@@ -56,6 +58,9 @@ public class PlayerInput : Singleton<PlayerInput> {
 		if(CheckFlags(InputState.UIAction)){
 			UIActions();
 		}
+		if(CheckFlags(InputState.FarmAction)){
+			FarmActions();
+		}
 	}
 
 	static public void SetFlag(InputState flag, bool on){
@@ -83,6 +88,18 @@ public class PlayerInput : Singleton<PlayerInput> {
 			RaycastHit hit;
 			if(Physics.Raycast(UI_camera.ScreenPointToRay(Input.mousePosition),out hit,1000f,UI_clickables)){
 				UI_Button handler = hit.collider.gameObject.GetComponent<UI_Button>();
+				if(handler){
+					handler.Clicked = true;
+				}
+			}
+		}
+	}
+
+	void FarmActions(){
+		if(Input.GetMouseButtonDown(0)){
+			RaycastHit hit;
+			if(Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition),out hit,1000f,farm_spaces)){
+				FarmGridSpace handler = hit.collider.gameObject.GetComponent<FarmGridSpace>();
 				if(handler){
 					handler.Clicked = true;
 				}

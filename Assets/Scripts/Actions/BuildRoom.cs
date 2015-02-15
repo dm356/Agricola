@@ -30,7 +30,8 @@ public class BuildRoom : Action {
 					return false;
 				}
 			}
-			if(PlayerHandler.CurrentPlayerHouse.CheckAdjacency() && PlayerHandler.CurrentPlayerHouse.BuildCount <= limit){
+			House house = PlayerHandler.CurrentPlayerHouse;
+			if(house.grid.CheckConnectivity(Tile.TileType.Room,Tile.TileType.None) && house.BuildCount <= limit){
 				return base.Valid;
 			}
 			return false;

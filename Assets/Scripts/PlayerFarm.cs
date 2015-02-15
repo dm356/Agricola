@@ -6,6 +6,7 @@ public class PlayerFarm : MonoBehaviour {
 	public Transform farm_view;
 	public House house;
 	public PlayerSupply supply;
+	public FieldHandler fields;
 
 	public int FamilyCount(){
 		return house.Count;

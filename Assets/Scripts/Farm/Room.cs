@@ -8,11 +8,11 @@ public class Room : RecursiveStorage {
 	public Material wood;
 	public Material clay;
 	public Material stone;
-
-	[HideInInspector]
-	public int x;
-	[HideInInspector]
-	public int y;
+//
+//	[HideInInspector]
+//	public int x;
+//	[HideInInspector]
+//	public int y;
 
 	public Resource.ResourceType type{
 		get{

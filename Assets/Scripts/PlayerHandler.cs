@@ -24,6 +24,12 @@ public class PlayerHandler : Singleton<PlayerHandler> {
 		}
 	}
 
+	public static FieldHandler CurrentPlayerFields{
+		get{
+			return Instance.farms[TurnManager.CurrentPlayer].fields;
+		}
+	}
+
 	public static Transform FarmView(int player){
 		return Instance.farms[player].farm_view;
 	}
