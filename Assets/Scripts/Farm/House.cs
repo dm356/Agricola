@@ -12,10 +12,6 @@ public class House : AbstractStorage {
 //	public GameObject selectabelPrefab;
 	private Resource.ResourceType _type;
 
-//	public GameObject selectable_prefab;
-//	private List<Selectable> selectables;
-//	private GameObject temp_housing;
-
 	public Resource.ResourceType type{
 		get{
 			return _type;
@@ -48,77 +44,23 @@ public class House : AbstractStorage {
 		grid.AssignToGrid(room,row,col);
 		room.transform.parent = transform;
 		Room rclass = room.GetComponent<Room>();
-//		rclass.x = row;
-//		rclass.y = col;
 		rooms.Add(rclass);
 		rclass.type = type;
 	}
 
 	public void BuildRooms(){
-		grid.Activate(room_prefab,Tile.TileType.None);
+		grid.Activate(room_prefab,Tile.TileType.None, FarmGridSpace.Location.Tile);
 		PlayerInput.SetFlag(PlayerInput.InputState.FarmAction,true);
-//		temp_housing = new GameObject();
-//		temp_housing.transform.parent = transform.parent;
-//		GameObject s_obj;
-//		Selectable s_comp;
-//		for(int i=0;i<3;i++){
-//			for(int j=0;j<5;j++){
-//				if(grid.CheckType(i,j) == Tile.TileType.None){
-//					s_obj = Instantiate(selectable_prefab,grid.gridPoint(i,j),Quaternion.identity) as GameObject;
-//					s_obj.transform.parent = temp_housing.transform;
-//					s_comp = s_obj.GetComponent<Selectable>();
-//					selectables.Add(s_comp);
-//					s_comp.x = i;
-//					s_comp.y = j;
-//				}
-//			}
-//		}
 	}
-
-//	public bool CheckAdjacency(){
-//		int min_dist, dist;
-//		foreach(Selectable selectable in selectables){
-//			if(selectable.Selected){
-//				min_dist = 10;
-//				foreach(Selectable other in selectables){
-//					if(selectable == other || !other.Selected){
-//						continue;
-//					}
-//					dist = Mathf.Abs(other.x-selectable.x) + Mathf.Abs(other.y-selectable.y);
-//					if(dist < min_dist){
-//						min_dist = dist;
-//					}
-//				}
-//				foreach(Room other in rooms){
-//					dist = Mathf.Abs(other.x-selectable.x) + Mathf.Abs(other.y-selectable.y);
-//					if(dist < min_dist){
-//						min_dist = dist;
-//					}
-//				}
-//				if(min_dist > 1){
-//					return false;
-//				}
-//			}
-//		}
-//		return grid.CheckConnectivity(Tile.TileType.Room,Tile.TileType.None);
-//	}
 
 	public void SetRooms(){
 		grid.buildRoomsFromSelected(this);
-//		foreach(Selectable selectable in selectables){
-//			if(selectable.Selected){
-//				spawnRoom(selectable.x,selectable.y);
-//			}
-//		}
 		ClearSelectables();
 	}
 
 	public void ClearSelectables(){
 		grid.Deactivate();
 		PlayerInput.SetFlag(PlayerInput.InputState.FarmAction,false);
-//		selectables.Clear();
-//		Destroy(temp_housing);
-//		temp_housing = null;
 	}
 
 	public void addFamily(int count){
@@ -129,11 +71,6 @@ public class House : AbstractStorage {
 
 	public int BuildCount{
 		get{
-//			int count = 0;
-//			foreach(Selectable s in selectables){
-//				if(s.Selected)
-//					count++;
-//			}
 			return grid.NumberSelected();
 		}
 	}

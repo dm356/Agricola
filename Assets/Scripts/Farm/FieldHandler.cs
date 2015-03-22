@@ -17,14 +17,11 @@ public class FieldHandler : MonoBehaviour {
 		grid.AssignToGrid(field,row,col);
 		field.transform.parent = transform;
 		Field fclass = field.GetComponent<Field>();
-//		fclass.x = row;
-//		fclass.y = col;
 		fields.Add(fclass);
-//		fclass.type = type;
 	}
 
 	public void PlowFields(){
-		grid.Activate(field_prefab,Tile.TileType.None);
+		grid.Activate(field_prefab,Tile.TileType.None, FarmGridSpace.Location.Tile);
 		PlayerInput.SetFlag(PlayerInput.InputState.FarmAction,true);
 	}
 
@@ -36,5 +33,10 @@ public class FieldHandler : MonoBehaviour {
 	public void ClearSelectables(){
 		grid.Deactivate();
 		PlayerInput.SetFlag(PlayerInput.InputState.FarmAction,false);
+	}
+
+	public void SowFields(){
+		grid.Activate(ResourceList.GetPrefab(Resource.ResourceType.Grain),Tile.TileType.Field, FarmGridSpace.Location.Resource);
+		PlayerInput.SetFlag(PlayerInput.InputState.FarmAction,true);
 	}
 }

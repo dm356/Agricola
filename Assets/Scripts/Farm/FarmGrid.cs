@@ -8,19 +8,19 @@ public class FarmGrid : MonoBehaviour {
 	private FarmGridSpace[,] grid;
 //	private List<GameObject> selectables;
 	public GameObject selectable_prefab;
-	private bool _active = false;
+//	private bool _active = false;
 
-	public void Activate(GameObject visual_prefab, Tile.TileType type_flag){
-		_active = true;
+	public void Activate(GameObject visual_prefab, Tile.TileType type_flag, FarmGridSpace.Location location){
+//		_active = true;
 		foreach(FarmGridSpace space in grid){
 			if((space.tile_type & type_flag) == space.tile_type){
-				space.Activate(visual_prefab);
+				space.Activate(visual_prefab, location);
 			}
 		}
 	}
 
 	public void Deactivate(){
-		_active = false;
+//		_active = false;
 		foreach(FarmGridSpace space in grid){
 			space.Deactivate();
 		}
@@ -41,7 +41,6 @@ public class FarmGrid : MonoBehaviour {
 		}
 
 		Deactivate();
-//		selectables = new List<GameObject>();
 	}
 
 	public Vector3 gridPoint(int row, int col){ 
@@ -165,21 +164,6 @@ public class FarmGrid : MonoBehaviour {
 		}
 		return list;
 	}
-	
-//	public void setSelectable(int row, int col){
-//		if(checkBounds(row,col)){
-//			GameObject s = Instantiate(selectable_prefab,gridPoint(row,col),Quaternion.identity) as GameObject;
-//			selectables.Add(s);
-//		}
-//	}
-
-//	public void setAllSelectable(){
-//		for(int i=0;i<3;i++){
-//			for(int j=0;j<5;j++){
-//				setSelectable(i,j);
-//			}
-//		}
-//	}
 
 	public Tile.TileType CheckType(int row, int col){
 		if(checkBounds(row,col)){
@@ -188,25 +172,4 @@ public class FarmGrid : MonoBehaviour {
 			return Tile.TileType.None;
 		}
 	}
-
-//	public List<GameObject> Populate(GameObject prefab, Tile.TileType flag){
-//		GameObject s;
-//		List<GameObject> list = new List<GameObject>();
-//		for(int i=0;i<3;i++){
-//			for(int j=0;j<5;j++){
-//				if((grid[i,j].type & flag) == grid[i,j].type){
-//					s = Instantiate(prefab,gridPoint(i,j),Quaternion.identity) as GameObject;
-//					list.Add(s);
-//				}
-//			}
-//		}
-//		return list;
-//	}
-	
-//	public void destroySelectables(){
-//		foreach(GameObject s in selectables){
-//			Destroy(s);
-//		}
-//		selectables.Clear();
-//	}
 }

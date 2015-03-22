@@ -15,7 +15,10 @@ public class ActionSpace : MonoBehaviour {
 
 	public virtual bool Valid{
 		get{
-			return activated_action.Valid;
+			if(activated_action)
+				return activated_action.Valid;
+			else
+				return false;
 		}
 	}
 
@@ -35,7 +38,9 @@ public class ActionSpace : MonoBehaviour {
 	}
 
 	public void CancelAction(){
-		activated_action.Cancel();
+		if(activated_action){
+			activated_action.Cancel();
+		}
 		PlayerHandler.ReturnFamily(player_stack.PullToken());
 	}
 
