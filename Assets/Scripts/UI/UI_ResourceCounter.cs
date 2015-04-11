@@ -14,15 +14,13 @@ public class UI_ResourceCounter : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-//		playerSupply = GameObject.Find("PlayerSupply").GetComponent<Supply>();
-//		display = transform.FindChild("Display").GetComponent<TextMesh>();
-		GameObject token = ResourceList.GetPrefab(resource);
+		GameObject token = ResourcePool.GetResource(resource);
 		if(token){
-			GameObject display_token = Instantiate(token) as GameObject;
+//			GameObject display_token = Instantiate(token) as GameObject;
 //			display_token.layer = 5; // set UI layer
-			display_token.rigidbody.useGravity = false;
-			display_token.transform.SetParent(token_location);
-			display_token.SetLayerRecursively(5); // set UI layer
+			token.rigidbody.useGravity = false;
+			token.transform.SetParent(token_location);
+			token.SetLayerRecursively(5); // set UI layer
 		}
 	}
 	

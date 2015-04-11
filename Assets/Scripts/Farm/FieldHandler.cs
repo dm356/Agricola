@@ -36,7 +36,7 @@ public class FieldHandler : MonoBehaviour {
 	}
 
 	public void SowFields(){
-		grid.Activate(ResourceList.GetPrefab(Resource.ResourceType.Grain),Tile.TileType.Field, FarmGridSpace.Location.Resource);
+		grid.Activate(ResourcePool.GetPrefab(Resource.ResourceType.Grain),Tile.TileType.Field, FarmGridSpace.Location.Resource);
 		PlayerInput.SetFlag(PlayerInput.InputState.FarmAction,true);
 	}
 }

@@ -33,13 +33,12 @@ public abstract class AbstractStorage : MonoBehaviour {
 	
 	public void RemoveTokens(int amount){
 		foreach(GameObject token in PullTokens(amount)){
-			Destroy(token);
+//			Destroy(token);
+			ResourcePool.ReturnResource(token);
 		}
 	}
 	
 	public void ClearStock(){
-		foreach(GameObject item in PullAll()){
-			Destroy(item);
-		}
+		RemoveTokens(Count);
 	}
 }

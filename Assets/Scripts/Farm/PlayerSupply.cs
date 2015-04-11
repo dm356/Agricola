@@ -25,6 +25,7 @@ public class PlayerSupply : AbstractStorage {
 		ResourceStorage component = storage_box.GetComponent<ResourceStorage>();
 		component.resource = resource;
 		if(storage.ContainsKey(resource) && storage[resource]){
+//			ResourcePool.ReturnResource(storage[resource]);
 			Destroy(storage[resource]);
 		}
 		storage[resource] = component;
@@ -36,7 +37,8 @@ public class PlayerSupply : AbstractStorage {
 		if(storage.ContainsKey(resource)){
 			storage[resource].AddStock(token);
 		}else{
-			Destroy(token);
+			ResourcePool.ReturnResource(token);
+//			Destroy(token);
 			Debug.Log("PlayerSupply.AddStock ERROR: Resource missing");
 		}
 	}

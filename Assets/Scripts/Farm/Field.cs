@@ -6,8 +6,8 @@ public class Field : TokenStorage {
 	public void SowResource(Resource.ResourceType resource, int count){
 		GameObject token;
 		for(int i=0;i<count;i++){
-			token = Instantiate(ResourceList.GetPrefab(resource)) as GameObject;
-			AddStock(token);
+//			token = Instantiate(ResourceList.GetPrefab(resource)) as GameObject;
+			AddStock(ResourcePool.GetResource(resource));
 		}
 	}
 
