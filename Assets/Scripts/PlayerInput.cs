@@ -116,14 +116,14 @@ public class PlayerInput : Singleton<PlayerInput> {
 					handler.SetupAction();
 				}
 			}
-			test_sphere.position = UI_camera.ScreenPointToRay(Input.mousePosition).origin;
-			test_sphere2.position = UI_camera.ScreenPointToRay(Input.mousePosition).origin + UI_camera.ScreenPointToRay(Input.mousePosition).direction;
-			if(Physics.Raycast(UI_camera.ScreenPointToRay(Input.mousePosition),out hit,1000f,UI_clickables)){
-				UI_Action handler = hit.collider.gameObject.GetComponent<UI_Action>();
-				if(handler){
-					handler.Execute();
-				}
-			}
+//			test_sphere.position = UI_camera.ScreenPointToRay(Input.mousePosition).origin;
+//			test_sphere2.position = UI_camera.ScreenPointToRay(Input.mousePosition).origin + UI_camera.ScreenPointToRay(Input.mousePosition).direction;
+//			if(Physics.Raycast(UI_camera.ScreenPointToRay(Input.mousePosition),out hit,1000f,UI_clickables)){
+//				UI_Action handler = hit.collider.gameObject.GetComponent<UI_Action>();
+//				if(handler){
+//					handler.Execute();
+//				}
+//			}
 		}
 		if(Input.GetMouseButtonDown(1)){
 			RaycastHit hit;

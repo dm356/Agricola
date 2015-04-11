@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using System;
 
 public class UI_Resources : MonoBehaviour {
-	public Supply playerSupply;
+//	public Supply playerSupply;
 	public Dictionary<Resource.ResourceType,TextMesh> displays;
 
 	// Use this for initialization
 	void Start () {
 		// Set properly once organization is established
-		playerSupply = GameObject.Find("PlayerSupply").GetComponent<Supply>();
+//		playerSupply = GameObject.Find("PlayerSupply").GetComponent<Supply>();
 		displays = new Dictionary<Resource.ResourceType, TextMesh>();
 		displays[Resource.ResourceType.Wood] = transform.FindChild("WoodDisplay").GetComponent<TextMesh>();
 		displays[Resource.ResourceType.Clay] = transform.FindChild("ClayDisplay").GetComponent<TextMesh>();

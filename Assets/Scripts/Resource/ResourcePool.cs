@@ -18,7 +18,7 @@ public class ResourcePool : Singleton<ResourcePool> {
 	private Dictionary<Resource.ResourceType,Stack<GameObject>> pool;
 	
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		pool = new Dictionary<Resource.ResourceType, Stack<GameObject>>();
 		foreach(Resource.ResourceType resource in Enum.GetValues(typeof(Resource.ResourceType))){
 			pool[resource] = new Stack<GameObject>();

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Field : TokenStorage {
+public class Field : RecursiveStorage {
 
 	public void SowResource(Resource.ResourceType resource, int count){
 		GameObject token;
