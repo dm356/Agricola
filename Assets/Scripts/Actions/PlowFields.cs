@@ -17,7 +17,6 @@ public class PlowFields : Action {
 
 	public override void Setup ()
 	{
-		active = true;
 		PlayerInput.ShowCurrentPlayerFarm();
 		PlayerHandler.CurrentPlayerFields.PlowFields();
 		base.Setup ();

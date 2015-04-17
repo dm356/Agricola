@@ -1,30 +1,32 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class RoundCard : ActionSpace {
+public class RoundCard : ActionSpace
+{
 
-	private bool active;
-	public MeshRenderer model;
-	public Material card_face;
+		protected bool _active;
+		public MeshRenderer model;
+		public Material card_face;
 
-	public virtual void Activate(){
-		if(!active){
-			model.material = card_face;
-			active = true;
+		public virtual void Activate ()
+		{
+				if (!_active) {
+						model.material = card_face;
+						_active = true;
+				}
 		}
-	}
 
-	public override void SetupAction ()
-	{
-		if(active){
-			base.SetupAction ();
+		public override void SetupAction ()
+		{
+				if (_active) {
+						base.SetupAction ();
+				}
 		}
-	}
 
-	public override void RoundSetup ()
-	{
-		if(active){
-			base.RoundSetup ();
+		public override void RoundSetup ()
+		{
+				if (_active) {
+						base.RoundSetup ();
+				}
 		}
-	}
 }

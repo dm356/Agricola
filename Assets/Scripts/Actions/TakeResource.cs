@@ -2,26 +2,25 @@
 using System.Collections;
 
 public class TakeResource : Action {
-	public Resource.ResourceType resource;
-	public int amount;
+	public Resource.ResourceType _resource;
+	public int _amount;
 
-	public override bool Valid {
-		get {
-			if(PlayerHandler.ActivePlayerResourceCount(resource) + amount < 0){
-				return false;
-			}
-			return base.Valid;
-		}
+	public TakeResource(Resource.ResourceType resource, int amount):base(){
+		_resource = resource;
+		_amount = amount;
 	}
 
-	public override void Setup ()
+	public override int ResourceModifier (Resource.ResourceType resource)
 	{
-		Interface.setModifier(resource,amount);
-		base.Setup();
+		int modifier = base.ResourceModifier (resource);
+		if(resource == _resource){
+			modifier += _amount;
+		}
+		return modifier;
 	}
-	
+
 	public override void Execute ()
 	{
-		PlayerHandler.CurrentPlayerAddResources(resource,amount);
+		PlayerHandler.CurrentPlayerAddResources(_resource,_amount);
 	}
 }

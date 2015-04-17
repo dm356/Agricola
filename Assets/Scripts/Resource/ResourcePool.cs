@@ -15,13 +15,13 @@ public class ResourcePool : Singleton<ResourcePool> {
 	public GameObject boar;
 	public GameObject cow;
 	public GameObject food;
-	private Dictionary<Resource.ResourceType,Stack<GameObject>> pool;
+	private Dictionary<Resource.ResourceType,Stack<Resource>> pool;
 	
 	// Use this for initialization
 	void Awake () {
-		pool = new Dictionary<Resource.ResourceType, Stack<GameObject>>();
+		pool = new Dictionary<Resource.ResourceType, Stack<Resource>>();
 		foreach(Resource.ResourceType resource in Enum.GetValues(typeof(Resource.ResourceType))){
-			pool[resource] = new Stack<GameObject>();
+			pool[resource] = new Stack<Resource>();
 		}
 	}
 
@@ -58,39 +58,44 @@ public class ResourcePool : Singleton<ResourcePool> {
 		return null;
 	}
 
-	public static GameObject GetResource(Resource.ResourceType resource){
+	public static Resource GetResource(Resource.ResourceType resource){
 		return GetResource(resource,Vector3.zero,Quaternion.identity);
 	}
 
-	public static GameObject GetResource(Resource.ResourceType resource, Vector3 position, Quaternion rotation){
+	public static Resource GetResource(Resource.ResourceType type, Vector3 position, Quaternion rotation){
 		GameObject token = null;
-		if(Stock(resource) > 0){
-			token = Instance.pool[resource].Pop();
+		Resource resource = null;
+		if(Stock(type) > 0){
+			resource = Instance.pool[type].Pop();
+			token = resource.gameObject;
 			token.transform.position = position;
+			token.transform.rotation = rotation;
 			token.SetActive(true);
 		}else{
-			GameObject prefab = GetPrefab(resource);
-			if(prefab)
-				token = Instantiate(prefab) as GameObject;
+			GameObject prefab = GetPrefab(type);
+			if(prefab){
+				token = Instantiate(prefab, position, rotation) as GameObject;
+				resource = token.GetComponent<Resource>();
+			}
 		}
-		return token;
+
+		return resource;
 	}
 
-	public static List<GameObject> GetResources(Resource.ResourceType resource, int amount){
+	public static List<Resource> GetResources(Resource.ResourceType type, int amount){
 		List<GameObject> list = new List<GameObject>();
 		for(int i=0;i<amount;i++){
-			list.Add(GetResource(resource));
+			list.Add(GetResource(type));
 		}
 		return list;
 	}
 
-	public static void ReturnResource(GameObject token){
-		token.SetActive(false);
-		Resource resource = token.GetComponent<Resource>();
-		if(resource && Instance.pool.ContainsKey(resource.type)){
-			Instance.pool[resource.type].Push(token);
+	public static void ReturnResource(Resource resource){
+		resource.gameObject.SetActive(false);
+		if(Instance.pool.ContainsKey(resource.type)){
+			Instance.pool[resource.type].Push(resource);
 		}else{
-			Destroy(token);
+//			Destroy(resource.gameObject);
 			Debug.Log("ResourcePool.ReturnResource ERROR: Unrecognized resource.");
 		}
 	}

@@ -2,14 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class RecursiveStorage : AbstractStorage {
+public class RecursiveStorage<T> : AbstractStorage<T> {
 
-	private List<AbstractStorage> storage_list;
-	
+	private List<AbstractStorage<T>> storage_list;
+
 	public override int Count{
 		get{
 			int n = 0;
-			foreach(AbstractStorage stack in storage_list){
+			foreach(AbstractStorage<T> stack in storage_list){
 				n += stack.Count;
 			}
 			return n;
@@ -17,10 +17,10 @@ public class RecursiveStorage : AbstractStorage {
 	}
 	
 	void Awake () {
-		storage_list = new List<AbstractStorage>();
-		AbstractStorage storage;
+		storage_list = new List<AbstractStorage<T>>();
+		AbstractStorage<T> storage;
 		foreach(Transform child in transform){
-			storage = child.GetComponent<AbstractStorage>();
+			storage = child.GetComponent<AbstractStorage<T>>();
 			if(storage){
 				storage_list.Add(storage);
 			}
@@ -28,9 +28,9 @@ public class RecursiveStorage : AbstractStorage {
 	}
 	
 	public override void AddStock(GameObject token){
-		AbstractStorage min_storage = null;
+		AbstractStorage<T> min_storage = null;
 		int min_count = 1000000;
-		foreach(AbstractStorage storage in storage_list){
+		foreach(AbstractStorage<T> storage in storage_list){
 			if(storage.Count < min_count){
 				min_count = storage.Count;
 				min_storage = storage;
@@ -38,11 +38,12 @@ public class RecursiveStorage : AbstractStorage {
 		}
 		min_storage.AddStock(token);
 	}
-	
-	public override GameObject PullToken(){
-		AbstractStorage max_storage = null;
+
+	public override void RemoveStock ()
+	{
+		AbstractStorage<T> max_storage = null;
 		int max_count = 0;
-		foreach(AbstractStorage storage in storage_list){
+		foreach(AbstractStorage<T> storage in storage_list){
 			if(storage.Count > max_count){
 				max_count = storage.Count;
 				max_storage = storage;
@@ -50,9 +51,9 @@ public class RecursiveStorage : AbstractStorage {
 		}
 		
 		if(max_storage){
-			return max_storage.PullToken();
+			return max_storage.RemoveStock();
 		}else{
-			Debug.Log("TokenStack.PullToken ERROR: No tokens left");
+			Debug.Log("RecursiveStorage.RemoveStock ERROR: No stock left");
 			return null;
 		}
 	}

@@ -2,29 +2,24 @@
 using System.Collections;
 
 public class CollectResource : Action {
-	public StockResource stock;
+	private StockResource _stock;
 
-//	void Start() {
-//		foreach(Transform child in transform){
-//			stock = child.GetComponent<StockResource>();
-//			if(stock)
-//				break;
-//		}
-//	}
+	public CollectResource(StockResource stock):base() {
+		_stock = stock;
+	}
 
-	public override void Setup ()
+	public override int ResourceModifier (Resource.ResourceType resource)
 	{
-		Interface.setModifier(stock.resource,stock.Count);
-		base.Setup();
+		int modifier = base.ResourceModifier(resource);
+		if(resource == _stock.resource){
+			modifier += _stock.Count;
+		}
+		return modifier;
 	}
 
 	public override void Execute ()
 	{
-		PlayerHandler.CurrentPlayerAddStock(stock.PullAll());
-	}
-
-	public override void RoundSetup ()
-	{
-		stock.Restock();
+		PlayerHandler.CurrentPlayerAddResources(_stock.resource,_stock.Count);
+		_stock.ClearStock();
 	}
 }

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 public class PlayerHandler : Singleton<PlayerHandler> {
 	public List<PlayerFarm> farms;
-	public bool active;
 
 	public static bool CurrentPlayerRoundFinished(){
 		return Instance.farms[TurnManager.CurrentPlayer].FamilyCount() == 0;
@@ -42,9 +41,9 @@ public class PlayerHandler : Singleton<PlayerHandler> {
 		return Instance.farms[PlayerInput.Id].ResourceCount(resource);
 	}
 
-	public static void CurrentPlayerAddStock(List<GameObject> tokens){
-		Instance.farms[TurnManager.CurrentPlayer].AddResources(tokens);
-	}
+//	public static void CurrentPlayerAddStock(List<GameObject> tokens){
+//		Instance.farms[TurnManager.CurrentPlayer].AddResources(tokens);
+//	}
 
 	public static void CurrentPlayerAddResources(Resource.ResourceType resource, int amount){
 		Instance.farms[TurnManager.CurrentPlayer].AddResources(resource,amount);

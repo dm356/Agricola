@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class Sow : Action {
 
-	private bool active = false;
+	private bool _active = false;
 
 	private Dictionary<Resource.ResourceType,int> cost;
 
@@ -13,7 +13,7 @@ public class Sow : Action {
 	}
 
 	void Update(){
-		if(active){
+		if(_active){
 			SetCost();
 			foreach(KeyValuePair<Resource.ResourceType,int> pairs in cost){
 				Interface.setModifier(pairs.Key,-pairs.Value);
@@ -34,7 +34,7 @@ public class Sow : Action {
 
 	public override void Setup ()
 	{
-		active = true;
+		_active = true;
 		PlayerInput.ShowCurrentPlayerFarm();
 //		PlayerHandler.CurrentPlayerHouse.BuildRooms();
 		base.Setup ();
@@ -45,13 +45,13 @@ public class Sow : Action {
 		foreach(KeyValuePair<Resource.ResourceType,int> pairs in cost){
 			PlayerHandler.CurrentPlayerAddResources(pairs.Key,-pairs.Value);
 		}
-		active = false;
+		_active = false;
 	}
 
 	public override void Cancel ()
 	{
 //		PlayerHandler.CurrentPlayerHouse.ClearSelectables();
-		active = false;
+		_active = false;
 		base.Cancel();
 	}
 	

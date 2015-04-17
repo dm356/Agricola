@@ -8,7 +8,7 @@ public class ResourceRoundCard : RoundCard {
 	{
 		base.Activate ();
 		ReplenishAction replenish = transform.parent.GetComponent<ReplenishAction>();
-		if(active && replenish){
+		if(_active && replenish){
 			replenish.resource_cards.Add(stock);
 		}
 	}

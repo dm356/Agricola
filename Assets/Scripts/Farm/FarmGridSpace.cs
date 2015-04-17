@@ -17,7 +17,6 @@ public class FarmGridSpace : MonoBehaviour {
 	private bool _selected = false;
 //	private bool _active = false;
 	public Tile.TileType tile_type = Tile.TileType.None;
-	public MeshRenderer renderer;
 
 	[System.Flags]
 	public enum Location{

@@ -5,7 +5,7 @@ using Enum = System.Enum;
 public class ActionSpace : MonoBehaviour {
 
 	public AbstractStorage player_stack;
-	public Action activated_action;
+//	public Action activated_action;
 
 	public bool Occupied{
 		get{
@@ -14,33 +14,36 @@ public class ActionSpace : MonoBehaviour {
 	}
 
 	public virtual bool Valid{
+//		get{
+//			if(activated_action)
+//				return activated_action.Valid;
+//			else
+//				return false;
+//		}
 		get{
-			if(activated_action)
-				return activated_action.Valid;
-			else
-				return false;
+			return false;
 		}
 	}
 
 	public virtual void SetupAction(){
 		Interface.awaitConfirmation(this);
-		if(activated_action){
-			activated_action.Setup();
-		}
+//		if(activated_action){
+//			activated_action.Setup();
+//		}
 		player_stack.AddStock(PlayerHandler.GetCurrentPlayerToken());
 		PlayerInput.SetFlag(PlayerInput.InputState.PlaceToken, false);
 	}
 
-	public virtual void ExecuteAction(){
-		if(activated_action){
-			activated_action.Execute();
-		}
-	}
-
+//	public virtual void ExecuteAction(){
+//		if(activated_action){
+//			activated_action.Execute();
+//		}
+//	}
+//
 	public void CancelAction(){
-		if(activated_action){
-			activated_action.Cancel();
-		}
+//		if(activated_action){
+//			activated_action.Cancel();
+//		}
 		PlayerHandler.ReturnFamily(player_stack.PullToken());
 	}
 

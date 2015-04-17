@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class ResourceStorage : RecursiveStorage {
+public class ResourceStorage : RecursiveStorage<Resource> {
 	
 	public Resource.ResourceType resource;
 	

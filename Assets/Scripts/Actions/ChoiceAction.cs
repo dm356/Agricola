@@ -4,31 +4,25 @@ using System.Collections.Generic;
 
 public class ChoiceAction : Action {
 
-	public GameObject window_prefab;
+//	public GameObject window_prefab;
 	private GameObject window_instance = null;
 
 	public List<Action> actions;
 
 	private int selected_action = 0;
 
-	public override bool Valid {
-		get {
-			return actions[selected_action].Valid;
-		}
-	}
-
 	public override void Execute ()
 	{
 		actions[selected_action].Execute();
 	}
 
-	public override void Setup ()
-	{
-		window_instance = Instantiate(window_prefab,Interface.WindowLocation.position,Interface.WindowLocation.rotation) as GameObject;
-		window_instance.transform.parent = Interface.Instance.transform;
-		UI_SelectionWindow window = window_instance.GetComponent<UI_SelectionWindow>();
-		window.BuildSelectables(actions);
-	}
+//	public override void Setup ()
+//	{
+//		window_instance = Instantiate(window_prefab,Interface.WindowLocation.position,Interface.WindowLocation.rotation) as GameObject;
+//		window_instance.transform.parent = Interface.Instance.transform;
+//		UI_SelectionWindow window = window_instance.GetComponent<UI_SelectionWindow>();
+//		window.BuildSelectables(actions);
+//	}
 
 	public override void RoundSetup ()
 	{
