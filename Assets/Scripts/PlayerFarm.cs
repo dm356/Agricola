@@ -9,28 +9,30 @@ public class PlayerFarm : MonoBehaviour {
 	public FieldHandler fields;
 
 	public int FamilyCount(){
-		return house.Count;
+//		return house.Count;
+		return 0;
 	}
 
 	public GameObject TakeFamily(){
-		if(FamilyCount() > 0){
-			return house.PullToken();
-		}else{
-			return null;
-		}
+//		if(FamilyCount() > 0){
+//			return house.PullToken();
+//		}else{
+//			return null;
+//		}
+		return null;
 	}
 
 	public void AddFamily(GameObject token){
-		house.AddStock(token);
+//		house.AddStock(token);
 	}
 
 	public int ResourceCount(Resource.ResourceType resource){
 		return supply.ResourceCount(resource);
 	}
 
-	public void AddResources(List<GameObject> tokens){
-		supply.AddStock(tokens);
-	}
+//	public void AddResources(List<GameObject> tokens){
+//		supply.AddStock(tokens);
+//	}
 
 	public void AddResources(Resource.ResourceType resource, int amount){
 		supply.AddResources(resource,amount);

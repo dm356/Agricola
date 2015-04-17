@@ -44,7 +44,8 @@ public class UI_SelectionWindow : MonoBehaviour {
 			p.y = y;
 			option = Instantiate(option_prefab,p,selectables.rotation) as GameObject;
 			button = option.GetComponent<UI_Button>();
-			button.SetText(action.name);
+//			button.SetText(action.name);
+			button.SetText("");
 			buttons.Add(button);
 			option.transform.parent = selectables;
 			y -= l;

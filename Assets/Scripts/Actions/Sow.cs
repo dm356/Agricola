@@ -21,24 +21,24 @@ public class Sow : Action {
 		}
 	}
 
-	public override bool Valid {
-		get {
-			foreach(KeyValuePair<Resource.ResourceType,int> pairs in cost){
-				if(PlayerHandler.ActivePlayerResourceCount(pairs.Key) - pairs.Value < 0){
-					return false;
-				}
-			}
-			return base.Valid;
-		}
-	}
+//	public override bool Valid {
+//		get {
+//			foreach(KeyValuePair<Resource.ResourceType,int> pairs in cost){
+//				if(PlayerHandler.ActivePlayerResourceCount(pairs.Key) - pairs.Value < 0){
+//					return false;
+//				}
+//			}
+//			return base.Valid;
+//		}
+//	}
 
-	public override void Setup ()
-	{
-		_active = true;
-		PlayerInput.ShowCurrentPlayerFarm();
-//		PlayerHandler.CurrentPlayerHouse.BuildRooms();
-		base.Setup ();
-	}
+//	public override void Setup ()
+//	{
+//		_active = true;
+//		PlayerInput.ShowCurrentPlayerFarm();
+////		PlayerHandler.CurrentPlayerHouse.BuildRooms();
+//		base.Setup ();
+//	}
 
 	public override void Execute ()
 	{
@@ -48,12 +48,12 @@ public class Sow : Action {
 		_active = false;
 	}
 
-	public override void Cancel ()
-	{
-//		PlayerHandler.CurrentPlayerHouse.ClearSelectables();
-		_active = false;
-		base.Cancel();
-	}
+//	public override void Cancel ()
+//	{
+////		PlayerHandler.CurrentPlayerHouse.ClearSelectables();
+//		_active = false;
+//		base.Cancel();
+//	}
 	
 	public void SetCost(){
 //		cost = Dictionary<Resource.ResourceType,int>();

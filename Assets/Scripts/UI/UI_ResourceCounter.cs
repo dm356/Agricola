@@ -14,7 +14,7 @@ public class UI_ResourceCounter : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		GameObject token = ResourcePool.GetResource(resource);
+		GameObject token = ResourcePool.GetResource(resource).gameObject;
 		if(token){
 //			GameObject display_token = Instantiate(token) as GameObject;
 //			display_token.layer = 5; // set UI layer

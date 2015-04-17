@@ -11,6 +11,6 @@ public class Field : RecursiveStorage<Resource> {
 	}
 
 	public void HarvestResources(){
-		RemoveTokens(1);
+//		RemoveTokens(1);
 	}
 }

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Room : RecursiveStorage {
+public class Room : RecursiveStorage<PlayerToken> {
 
 	private Resource.ResourceType _type;
 	public MeshRenderer model;

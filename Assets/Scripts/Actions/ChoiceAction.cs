@@ -24,17 +24,17 @@ public class ChoiceAction : Action {
 //		window.BuildSelectables(actions);
 //	}
 
-	public override void RoundSetup ()
-	{
-		foreach(Action action in actions){
-			action.RoundSetup();
-		}
-	}
+//	public override void RoundSetup ()
+//	{
+//		foreach(Action action in actions){
+//			action.RoundSetup();
+//		}
+//	}
 
-	public override void Cancel ()
-	{
-		actions[selected_action].Cancel();
-	}
+//	public override void Cancel ()
+//	{
+//		actions[selected_action].Cancel();
+//	}
 	
 	// Update is called once per frame
 	void Update () {
@@ -42,13 +42,13 @@ public class ChoiceAction : Action {
 			UI_SelectionWindow window = window_instance.GetComponent<UI_SelectionWindow>();
 			if(window){
 				if(window.Confirmed){
-					actions[window.SelectedAction].Setup();
+//					actions[window.SelectedAction].Setup();
 					selected_action = window.SelectedAction;
-					Destroy(window_instance);
+//					Destroy(window_instance);
 					window_instance = null;
-					base.Setup();
+//					base.Setup();
 				}else if(window.Canceled){
-					Destroy(window_instance);
+//					Destroy(window_instance);
 					window_instance = null;
 					Interface.Cancel();
 				}

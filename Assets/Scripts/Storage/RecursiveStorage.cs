@@ -27,7 +27,7 @@ public class RecursiveStorage<T> : AbstractStorage<T> {
 		}
 	}
 	
-	public override void AddStock(GameObject token){
+	public override void AddStock(T item){
 		AbstractStorage<T> min_storage = null;
 		int min_count = 1000000;
 		foreach(AbstractStorage<T> storage in storage_list){
@@ -36,7 +36,7 @@ public class RecursiveStorage<T> : AbstractStorage<T> {
 				min_storage = storage;
 			}
 		}
-		min_storage.AddStock(token);
+		min_storage.AddStock(item);
 	}
 
 	public override void RemoveStock ()
@@ -51,10 +51,10 @@ public class RecursiveStorage<T> : AbstractStorage<T> {
 		}
 		
 		if(max_storage){
-			return max_storage.RemoveStock();
+			max_storage.RemoveStock();
 		}else{
 			Debug.Log("RecursiveStorage.RemoveStock ERROR: No stock left");
-			return null;
+//			return null;
 		}
 	}
 }

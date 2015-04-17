@@ -4,7 +4,7 @@ using Enum = System.Enum;
 
 public class ActionSpace : MonoBehaviour {
 
-	public AbstractStorage player_stack;
+	public AbstractStorage<PlayerToken> player_stack;
 //	public Action activated_action;
 
 	public bool Occupied{
@@ -30,7 +30,7 @@ public class ActionSpace : MonoBehaviour {
 //		if(activated_action){
 //			activated_action.Setup();
 //		}
-		player_stack.AddStock(PlayerHandler.GetCurrentPlayerToken());
+//		player_stack.AddStock(PlayerHandler.GetCurrentPlayerToken());
 		PlayerInput.SetFlag(PlayerInput.InputState.PlaceToken, false);
 	}
 
@@ -44,18 +44,18 @@ public class ActionSpace : MonoBehaviour {
 //		if(activated_action){
 //			activated_action.Cancel();
 //		}
-		PlayerHandler.ReturnFamily(player_stack.PullToken());
+//		PlayerHandler.ReturnFamily(player_stack.PullToken());
 	}
 
 	public virtual void RoundSetup(){
-		if(activated_action){
-			activated_action.RoundSetup();
-		}
+//		if(activated_action){
+//			activated_action.RoundSetup();
+//		}
 	}
 
 	public virtual void RoundClear(){
-		foreach(GameObject token in player_stack.PullAll()){
-			PlayerHandler.ReturnFamily(token);
-		}
+//		foreach(GameObject token in player_stack.PullAll()){
+//			PlayerHandler.ReturnFamily(token);
+//		}
 	}
 }

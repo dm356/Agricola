@@ -1,15 +1,33 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
-public class AbstractPool : MonoBehaviour {
+[System.Serializable]
+public class AbstractPool<T> where T : MonoBehaviour{
+	public GameObject _prefab;
+	private Stack<T> pool;
 
-	// Use this for initialization
-	void Start () {
-	
+	public AbstractPool(GameObject prefab){
+		_prefab = prefab;
+		pool = new Stack<T>();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+
+	public GameObject Prefab{
+		get{
+			return _prefab;
+		}
+	}
+
+	public T GetItem(){
+		if(pool.Count > 0){
+			return pool.Pop();
+		}else{
+			GameObject obj = GameObject.Instantiate(_prefab) as GameObject;
+			return obj.GetComponent<T>();
+		}
+	}
+
+	public void ReturnItem(T item){
+		pool.Push(item);
 	}
 }

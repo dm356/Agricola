@@ -13,7 +13,7 @@ public class Interface : Singleton<Interface> {
 	public Transform window_location;
 
 	static public void Confirm(){
-		Instance.waitingAction.ExecuteAction();
+//		Instance.waitingAction.ExecuteAction();
 		ShowButtons(false);
 		resetModifiers();
 		TurnManager.CyclePlayers();

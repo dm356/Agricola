@@ -15,16 +15,16 @@ public class ResourceStorage : RecursiveStorage<Resource> {
 				AddStock(ResourcePool.GetResource(resource));
 			}
 		}else if(amount < 0){
-			RemoveTokens(-amount);
+			RemoveStock(-amount);
 		}
 	}
 
-	public override void AddStock(GameObject token){
-		// Check token resource
-		if(token.GetComponent<Resource>().type == resource){
-			base.AddStock(token);
-		}else{
-			Debug.Log("ResourceStorage ERROR: Wrong resource token added");
-		}
-	}
+//	public override void AddStock(GameObject token){
+//		// Check token resource
+//		if(token.GetComponent<Resource>().type == resource){
+//			base.AddStock(token);
+//		}else{
+//			Debug.Log("ResourceStorage ERROR: Wrong resource token added");
+//		}
+//	}
 }

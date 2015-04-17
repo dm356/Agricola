@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class AbstractStack<T> : AbstractStorage<T> {
+public abstract class AbstractStack<T> : AbstractStorage<T> {
 
 	protected Stack<T> stock;
 
@@ -13,7 +13,7 @@ public class AbstractStack<T> : AbstractStorage<T> {
 	}
 
 	void Awake () {
-		stock = new List<T>();
+		stock = new Stack<T>();
 	}
 	
 	public override void AddStock(T item){
@@ -27,5 +27,5 @@ public class AbstractStack<T> : AbstractStorage<T> {
 //		token.transform.rotation = transform.rotation;
 //		token.transform.parent = transform;
 		stock.Push(item);
-	}
+	}	
 }

@@ -2,7 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class House : AbstractStorage {
+public class House : MonoBehaviour {
+//public class House : AbstractStorage<Room> {
 //	public enum HouseType {Wood,Clay,Stone}
 	public GameObject player_token;
 
@@ -65,7 +66,7 @@ public class House : AbstractStorage {
 
 	public void addFamily(int count){
 		for(int i=0;i<count;i++){
-			AddStock(Instantiate(player_token) as GameObject);
+//			AddStock(Instantiate(player_token) as GameObject);
 		}
 	}
 
@@ -75,43 +76,43 @@ public class House : AbstractStorage {
 		}
 	}
 
-	public override int Count{
-		get{
-			int n = 0;
-			foreach(Room room in rooms){
-				n += room.Count;
-			}
-			return n;
-		}
-	}
+//	public override int Count{
+//		get{
+//			int n = 0;
+//			foreach(Room room in rooms){
+//				n += room.Count;
+//			}
+//			return n;
+//		}
+//	}
 
-	public override void AddStock(GameObject token){
-		Room min_room = null;
-		int min_count = 1000000;
-		foreach(Room room in rooms){
-			if(room.Count < min_count){
-				min_count = room.Count;
-				min_room = room;
-			}
-		}
-		min_room.AddStock(token);
-	}
+//	public override void AddStock(GameObject token){
+//		Room min_room = null;
+//		int min_count = 1000000;
+//		foreach(Room room in rooms){
+//			if(room.Count < min_count){
+//				min_count = room.Count;
+//				min_room = room;
+//			}
+//		}
+//		min_room.AddStock(token);
+//	}
 	
-	public override GameObject PullToken(){
-		Room max_room = null;
-		int max_count = 0;
-		foreach(Room room in rooms){
-			if(room.Count > max_count){
-				max_count = room.Count;
-				max_room = room;
-			}
-		}
-		
-		if(max_room){
-			return max_room.PullToken();
-		}else{
-			Debug.Log("TokenStack.PullToken ERROR: No tokens left");
-			return null;
-		}
-	}
+//	public override GameObject PullToken(){
+//		Room max_room = null;
+//		int max_count = 0;
+//		foreach(Room room in rooms){
+//			if(room.Count > max_count){
+//				max_count = room.Count;
+//				max_room = room;
+//			}
+//		}
+//		
+//		if(max_room){
+//			return max_room.PullToken();
+//		}else{
+//			Debug.Log("TokenStack.PullToken ERROR: No tokens left");
+//			return null;
+//		}
+//	}
 }

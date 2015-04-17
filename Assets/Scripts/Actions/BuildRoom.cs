@@ -23,28 +23,28 @@ public class BuildRoom : Action {
 		}
 	}
 
-	public override bool Valid {
-		get {
-			foreach(KeyValuePair<Resource.ResourceType,int> pairs in cost){
-				if(PlayerHandler.ActivePlayerResourceCount(pairs.Key) - pairs.Value < 0){
-					return false;
-				}
-			}
-			House house = PlayerHandler.CurrentPlayerHouse;
-			if(house.grid.CheckConnectivity(Tile.TileType.Room,Tile.TileType.None) && house.BuildCount <= limit){
-				return base.Valid;
-			}
-			return false;
-		}
-	}
+//	public override bool Valid {
+//		get {
+//			foreach(KeyValuePair<Resource.ResourceType,int> pairs in cost){
+//				if(PlayerHandler.ActivePlayerResourceCount(pairs.Key) - pairs.Value < 0){
+//					return false;
+//				}
+//			}
+//			House house = PlayerHandler.CurrentPlayerHouse;
+//			if(house.grid.CheckConnectivity(Tile.TileType.Room,Tile.TileType.None) && house.BuildCount <= limit){
+//				return base.Valid;
+//			}
+//			return false;
+//		}
+//	}
 
-	public override void Setup ()
-	{
-		_active = true;
-		PlayerInput.ShowCurrentPlayerFarm();
-		PlayerHandler.CurrentPlayerHouse.BuildRooms();
-		base.Setup ();
-	}
+//	public override void Setup ()
+//	{
+//		_active = true;
+//		PlayerInput.ShowCurrentPlayerFarm();
+//		PlayerHandler.CurrentPlayerHouse.BuildRooms();
+//		base.Setup ();
+//	}
 
 	public override void Execute ()
 	{
@@ -55,12 +55,12 @@ public class BuildRoom : Action {
 		_active = false;
 	}
 
-	public override void Cancel ()
-	{
-		PlayerHandler.CurrentPlayerHouse.ClearSelectables();
-		_active = false;
-		base.Cancel();
-	}
+//	public override void Cancel ()
+//	{
+//		PlayerHandler.CurrentPlayerHouse.ClearSelectables();
+//		_active = false;
+//		base.Cancel();
+//	}
 
 	public void SetCost(){
 //		cost = Dictionary<Resource.ResourceType,int>();
