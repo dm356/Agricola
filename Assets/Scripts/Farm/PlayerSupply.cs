@@ -2,16 +2,16 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class PlayerSupply : AbstractStorage<Resource>
+public class PlayerSupply : MonoBehaviour
 {
 
 	public GameObject storagePrefab;
-	private Dictionary<ResourceType,ResourceStorage> storage;
+	private Dictionary<ResourceType,StorageCounter> storage;
 	public float spacing;
 
 	void Awake ()
 	{
-		storage = new Dictionary<ResourceType, ResourceStorage> ();
+		storage = new Dictionary<ResourceType, StorageCounter> ();
 		spawnStorage (ResourceType.Wood, -3f * spacing);
 		spawnStorage (ResourceType.Clay, -2f * spacing);
 		spawnStorage (ResourceType.Stone, -1f * spacing);
@@ -21,75 +21,38 @@ public class PlayerSupply : AbstractStorage<Resource>
 		spawnStorage (ResourceType.Food, 3f * spacing);
 	}
 
+	void Start ()
+	{
+		Console.addConsoleFunction ("supply", consoleAction);
+	}
+
 	void spawnStorage (ResourceType resource, float x)
 	{
 		GameObject storage_box = Instantiate (storagePrefab, transform.position + Vector3.right * x, transform.rotation) as GameObject;
 		storage_box.transform.SetParent (transform);
-		ResourceStorage component = storage_box.GetComponent<ResourceStorage> ();
-		component.resource = resource;
-		if (storage.ContainsKey (resource) && storage [resource]) {
-//			ResourcePool.ReturnResource(storage[resource]);
-			Destroy (storage [resource]);
-		}
-		storage [resource] = component;
-	}
-
-	//	public override void AddStock (GameObject token)
-	//	{
-	//		Resource.ResourceType resource = token.GetComponent<Resource>().type;
-	//		if(storage.ContainsKey(resource)){
-	//			storage[resource].AddStock(token);
-	//		}else{
-	//			ResourcePool.ReturnResource(token);
-	////			Destroy(token);
-	//			Debug.Log("PlayerSupply.AddStock ERROR: Resource missing");
-	//		}
-	//	}
-
-	public override void AddStock (Resource item)
-	{
-		if (storage.ContainsKey (item.type)) {
-			storage [item.type].AddStock (item);
-		} else {
-//			ResourcePool.ReturnResource (item);
-//			Destroy(token);
-			Debug.Log ("PlayerSupply.AddStock ERROR: Resource missing");
-		}
+		ResourceStack component = storage_box.GetComponent<ResourceStack> ();
+		component.type = resource;
+//		if (storage.ContainsKey (resource) && storage [resource]) {
+////			ResourcePool.ReturnResource(storage[resource]);
+//			Destroy (storage [resource]);
+//		}
+		storage [resource] = new StorageCounter ();
+		component.SetCounter (storage [resource]);
 	}
 
 	public void AddResources (ResourceType resource, int amount)
 	{
 		if (storage.ContainsKey (resource)) {
-			storage [resource].AddStock (amount);
+			storage [resource].Count += amount;
 		} else {
 			Debug.Log ("PlayerSupply.AddResources ERROR: Resource missing");
 		}
 	}
 
-	//public GameObject PullResource (ResourceType resource)
-	//{
-	//  if (storage.ContainsKey (resource)) {
-	//    return storage [resource].PullToken ();
-	//  } else {
-	//    Debug.Log ("PlayerSupply.PullResource ERROR: Resource missing");
-	//    return null;
-	//  }
-	//}
-
-	//public List<GameObject> PullResources (ResourceType resource, int amount)
-	//{
-	//  if (storage.ContainsKey (resource)) {
-	//    return storage [resource].PullTokens (amount);
-	//  } else {
-	//    Debug.Log ("PlayerSupply.PullResources ERROR: Resource missing");
-	//    return null;
-	//  }
-	//}
-
 	public void RemoveResources (ResourceType resource, int amount)
 	{
 		if (storage.ContainsKey (resource)) {
-//			storage [resource].RemoveTokens (amount);
+			storage [resource].Count -= amount;
 		} else {
 			Debug.Log ("PlayerSupply.RemoveResources ERROR: Resource missing");
 		}
@@ -105,47 +68,33 @@ public class PlayerSupply : AbstractStorage<Resource>
 		}
 	}
 
-	public override void RemoveStock ()
+	void consoleAction (string[] command)
 	{
-		throw new System.NotImplementedException ();
-	}
-
-	//	public override GameObject PullToken ()
-	//	{
-	//		throw new System.NotImplementedException ();
-	//	}
-
-	public override int Count {
-		get {
-			throw new System.NotImplementedException ();
+		if (command.Length < 3) {
+			Debug.Log ("Insufficient length");
+		}
+		if (command [0].Equals ("add", System.StringComparison.Ordinal)) {
+			try {
+				int count = int.Parse (command [2]);
+				if (count < 0) {
+					RemoveResources (Resource.string2Type (command [1]), -count);
+				} else {
+					AddResources (Resource.string2Type (command [1]), count);
+				}
+			} catch (System.FormatException) {
+				Debug.Log ("Improper formatting.");
+			}
+		} else if (command [0].Equals ("remove", System.StringComparison.Ordinal)) {
+			try {
+				int count = int.Parse (command [2]);
+				if (count < 0) {
+					AddResources (Resource.string2Type (command [1]), -count);
+				} else {
+					RemoveResources (Resource.string2Type (command [1]), count);
+				}
+			} catch (System.FormatException) {
+				Debug.Log ("Improper formatting.");
+			}
 		}
 	}
-
-	//	void consoleAction (string[] command)
-	//	{
-	//		if (command.Length < 3) {
-	//			Debug.Log ("Insufficient length");
-	//		}
-	//		if (command [0].Equals ("add", System.StringComparison.Ordinal)) {
-	//			try {
-	//				int count = int.Parse (command [2]);
-	//				switch (command [1]) {
-	//				case "wood":
-	//					AddResources (ResourceType.Wood, count);
-	//					break;
-	//				case "clay":
-	//					type = ResourceType.Clay;
-	//					break;
-	//				case "stone":
-	//					type = ResourceType.Stone;
-	//					break;
-	//				case "reed":
-	//					break;
-	//
-	//				}
-	//			} catch (System.FormatException) {
-	//				Debug.Log ("Improper formatting.");
-	//			}
-	//		}
-	//	}
 }

@@ -40,6 +40,34 @@ public class Resource : MonoBehaviour
 		}
 	}
 
+	public static ResourceType string2Type (string s)
+	{
+		switch (s) {
+		case "wood":
+			return ResourceType.Wood;
+		case "clay":
+			return ResourceType.Clay;
+		case "reed":
+			return ResourceType.Reed;
+		case "stone":
+			return ResourceType.Stone;
+		case "grain":
+			return ResourceType.Grain;
+		case "vegetable":
+			return ResourceType.Vegetable;
+		case "sheep":
+			return ResourceType.Sheep;
+		case "boar":
+			return ResourceType.Boar;
+		case "cow":
+			return ResourceType.Cow;
+		case "food":
+			return ResourceType.Food;
+		}
+		Debug.Log ("Resource string unrecognizable.  Returning food.");
+		return ResourceType.Food;
+	}
+
 	public static bool IsAnimal (ResourceType type)
 	{
 		return type == ResourceType.Boar || type == ResourceType.Cow || type == ResourceType.Sheep;
