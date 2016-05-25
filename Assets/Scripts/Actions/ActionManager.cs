@@ -2,31 +2,36 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class ActionManager : Singleton<ActionManager> {
+public class ActionManager : Singleton<ActionManager>
+{
 
 	private List<Action> pending_actions;
 
 	// Use this for initialization
-	void Awake () {
-		pending_actions = new List<Action>();
+	void Awake ()
+	{
+		pending_actions = new List<Action> ();
 	}
-	
-	public int ResourceModifier(Resource.ResourceType resource){
+
+	public int ResourceModifier (ResourceType resource)
+	{
 		int modifier = 0;
-		foreach(Action act in pending_actions){
-			modifier += act.ResourceModifier(resource);
+		foreach (Action act in pending_actions) {
+			modifier += act.ResourceModifier (resource);
 		}
 		return modifier;
 	}
 
-	public void AddActionToQueue(Action action){
-		pending_actions.Add(action);
+	public void AddActionToQueue (Action action)
+	{
+		pending_actions.Add (action);
 	}
 
-	public void Execute(){
-		foreach(Action act in pending_actions){
-			act.Execute();
+	public void Execute ()
+	{
+		foreach (Action act in pending_actions) {
+			act.Execute ();
 		}
-		pending_actions.Clear();
+		pending_actions.Clear ();
 	}
 }

@@ -2,7 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class FarmGridSpace : MonoBehaviour {
+public class FarmGridSpace : MonoBehaviour
+{
 	private List<GameObject> prefabs_list;
 	private int prefab_index = 0;
 	private GameObject visual_instance;
@@ -15,36 +16,38 @@ public class FarmGridSpace : MonoBehaviour {
 	public int y;
 	private bool _clicked = false;
 	private bool _selected = false;
-//	private bool _active = false;
-	public Tile.TileType tile_type = Tile.TileType.None;
+	//	private bool _active = false;
+	//	public Tile.TileType tile_type = Tile.TileType.None;
 
 	[System.Flags]
-	public enum Location{
+	public enum Location
+	{
 		Tile,
 		Resource,
 		Stable
 	}
 
-//	void Awake(){
-//		prefabs_list = new List<GameObject>();
-//	}
+	//	void Awake(){
+	//		prefabs_list = new List<GameObject>();
+	//	}
 
-	void Update(){
-		if(Clicked){
-			if(++prefab_index > prefabs_list.Count){
+	void Update ()
+	{
+		if (Clicked) {
+			if (++prefab_index > prefabs_list.Count) {
 				prefab_index = 0;
 			}
 
-			SpawnPrefab();
+			SpawnPrefab ();
 //			Selected = !_selected;
 		}
 	}
 
-	public bool Selected{
-		get{
+	public bool Selected {
+		get {
 			return _selected;
 		}
-		set{
+		set {
 //			if(visual_instance){
 //				visual_instance.SetActive(value);
 //			}
@@ -53,77 +56,82 @@ public class FarmGridSpace : MonoBehaviour {
 		}
 	}
 
-	public bool Clicked{
-		get{
+	public bool Clicked {
+		get {
 			bool val = _clicked;
 			_clicked = false;
 			return val;
 		}
-		set{
+		set {
 			_clicked = value;
 		}
 	}
 
-	public void Activate(GameObject prefab, Location location){
-		if(location == Location.Resource){
+	public void Activate (GameObject prefab, Location location)
+	{
+		if (location == Location.Resource) {
 			visual_location = resource_location;
-		}else if(location == Location.Stable){
+		} else if (location == Location.Stable) {
 			visual_location = stable_location;
-		}else if(location == Location.Tile){
+		} else if (location == Location.Tile) {
 			visual_location = transform;
 		}
 
 		prefab_index = 0;
-		prefabs_list = new List<GameObject>();
-		prefabs_list.Add(prefab);
+		prefabs_list = new List<GameObject> ();
+		prefabs_list.Add (prefab);
 
 //		visual_instance.SetActive(false);
 		_clicked = false;
 		_selected = false;
 
-		gameObject.SetActive(true);
+		gameObject.SetActive (true);
 	}
 
-	public void Activate(List<GameObject> prefabs, Location location){
-		if(location == Location.Resource){
+	public void Activate (List<GameObject> prefabs, Location location)
+	{
+		if (location == Location.Resource) {
 			visual_location = resource_location;
-		}else if(location == Location.Stable){
+		} else if (location == Location.Stable) {
 			visual_location = stable_location;
-		}else if(location == Location.Tile){
+		} else if (location == Location.Tile) {
 			visual_location = transform;
 		}
-		
+
 		prefab_index = 0;
 		prefabs_list = prefabs;
-		
+
 		//		visual_instance.SetActive(false);
 		_clicked = false;
 		_selected = false;
-		
-		gameObject.SetActive(true);
+
+		gameObject.SetActive (true);
 	}
 
-	public void Deactivate(){
-		if(visual_instance){
-			Destroy(visual_instance);
+	public void Deactivate ()
+	{
+		if (visual_instance) {
+			Destroy (visual_instance);
 			visual_instance = null;
 		}
 		_clicked = false;
 		_selected = false;
-		gameObject.SetActive(false);
+		gameObject.SetActive (false);
 	}
 
-	public int Index(){
-		return prefab_index-1;
+	public int Index ()
+	{
+		return prefab_index - 1;
 	}
 
-	void SpawnPrefab(){
-		if(visual_instance){
-			Destroy(visual_instance);
+	void SpawnPrefab ()
+	{
+		if (visual_instance) {
+			Destroy (visual_instance);
 			visual_instance = null;
 		}
-		if(prefab_index > 0){
-			visual_instance = Instantiate(prefabs_list[prefab_index-1],visual_location.position,visual_location.rotation) as GameObject;
+		if (prefab_index > 0) {
+			visual_instance = Instantiate (prefabs_list [prefab_index - 1], visual_location.position, visual_location.rotation) as GameObject;
 			visual_instance.transform.parent = transform;
 		}
 	}

@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlowFields : Action {
+public class PlowFields : Action
+{
 
 	public int limit = 15;
 
@@ -24,7 +25,7 @@ public class PlowFields : Action {
 
 	public override void Execute ()
 	{
-		PlayerHandler.CurrentPlayerFields.SetFields();
+//		PlayerHandler.CurrentPlayerFarm.fields.SetFields ();
 	}
 
 //	public override void Cancel ()

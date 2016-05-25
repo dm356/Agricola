@@ -2,41 +2,85 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class FieldHandler : MonoBehaviour {
+public class FieldHandler : TileHandler
+{
+	enum Mode
+	{
+		IDLE,
+		CLAIM_FIELD,
+		SOW}
+	;
 
 	private List<Field> fields;
-	public FarmGrid grid;
-	public GameObject field_prefab;
 
-	void Start(){
-		fields = new List<Field>();
+	private Mode mode;
+
+	void Start ()
+	{
+//		selectables = new List<Selectable>();
+		fields = new List<Field> ();
+		mode = Mode.IDLE;
+		Console.addConsoleFunction ("field", consoleAction);
 	}
 
-	public void SpawnField(int row, int col){
-		GameObject field = Instantiate(field_prefab) as GameObject;
-		grid.AssignToGrid(field,row,col);
-		field.transform.parent = transform;
-		Field fclass = field.GetComponent<Field>();
-		fields.Add(fclass);
+	void Update ()
+	{
+		if (mode == Mode.CLAIM_FIELD) {
+//			Debug.Log ("Claim");
+			UpdateSelectable ();
+		}
 	}
 
-	public void PlowFields(){
-		grid.Activate(field_prefab,Tile.TileType.None, FarmGridSpace.Location.Tile);
-		PlayerInput.SetFlag(PlayerInput.InputState.FarmAction,true);
+	protected override void ReturnTileObject (Tile tile)
+	{
+		PoolManager.ReturnTile (TileMarkerType.FIELD, tile.TileObject);
+		base.ReturnTileObject (tile);
 	}
 
-	public void SetFields(){
-		grid.buildFieldsFromSelected(this);
-		ClearSelectables();
+	protected override void StoreComponent (Tile tile)
+	{
+		fields.Add (tile.TileObject.GetComponent<Field> ());
+		base.StoreComponent (tile);
 	}
 
-	public void ClearSelectables(){
-		grid.Deactivate();
-		PlayerInput.SetFlag(PlayerInput.InputState.FarmAction,false);
+	public override void StakeClaim (Tile tile)
+	{
+		base.StakeClaim (tile);
+		GameObject field = PoolManager.GetTile (TileMarkerType.FIELD);
+		tile.TileObject = field;
 	}
 
-	public void SowFields(){
-		grid.Activate(ResourcePool.GetPrefab(Resource.ResourceType.Grain),Tile.TileType.Field, FarmGridSpace.Location.Resource);
-		PlayerInput.SetFlag(PlayerInput.InputState.FarmAction,true);
+	public void BuildFields ()
+	{
+//		grid.Activate (room_prefab, Tile.TileType.None, FarmGridSpace.Location.Tile);
+//		PlayerInput.SetFlag (PlayerInput.InputState.FarmAction, true);
+		mode = Mode.CLAIM_FIELD;
+		InitializeSelectable ();
+	}
+
+	public void AcceptFields ()
+	{
+		mode = Mode.IDLE;
+		FinalizeClaims ();
+	}
+
+	void consoleAction (string[] command)
+	{
+		if (command.Length < 1) {
+			Debug.Log ("Insufficient command length.");
+		}
+
+		string[] sub = new string[command.Length - 1];
+		for (int i = 1; i < command.Length; i++) {
+			sub [i - 1] = command [i];
+		}
+		if (command [0] == "highlight") {
+			consoleHighlight (sub);
+		} else if (command [0] == "build") {
+			BuildFields ();
+		} else if (command [0] == "accept") {
+			AcceptFields ();
+		}
+
 	}
 }

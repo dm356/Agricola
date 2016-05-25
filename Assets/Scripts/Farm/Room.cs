@@ -1,30 +1,30 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Room : RecursiveStorage<PlayerToken> {
-
-	private Resource.ResourceType _type;
+public class Room : RecursiveStorage<PlayerToken>
+{
+	private ResourceType _type;
 	public MeshRenderer model;
 	public Material wood;
 	public Material clay;
 	public Material stone;
-//
-//	[HideInInspector]
-//	public int x;
-//	[HideInInspector]
-//	public int y;
+	//
+	//	[HideInInspector]
+	//	public int x;
+	//	[HideInInspector]
+	//	public int y;
 
-	public Resource.ResourceType type{
-		get{
+	public ResourceType type {
+		get {
 			return _type;
 		}
-		set{
+		set {
 			_type = value;
-			if(value == Resource.ResourceType.Wood){
+			if (value == ResourceType.Wood) {
 				model.material = wood;
-			}else if(value == Resource.ResourceType.Clay){
+			} else if (value == ResourceType.Clay) {
 				model.material = clay;
-			}else if(value == Resource.ResourceType.Stone){
+			} else if (value == ResourceType.Stone) {
 				model.material = stone;
 			}
 		}
