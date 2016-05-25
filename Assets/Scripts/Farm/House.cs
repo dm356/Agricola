@@ -2,116 +2,129 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class House : AbstractStorage {
-//	public enum HouseType {Wood,Clay,Stone}
-	public GameObject player_token;
+public class House : TileHandler
+{
+	enum Mode
+	{
+		IDLE,
+		CLAIM_ROOM,
+		CHOOSE_FAMILY}
+	;
+
+	//	public GameObject player_token;
 
 	private List<Room> rooms;
-	public FarmGrid grid;
-	public GameObject room_prefab;
-//	public GameObject selectabelPrefab;
-	private Resource.ResourceType _type;
 
-	public Resource.ResourceType type{
-		get{
+	private ResourceType _type;
+
+	private Mode mode;
+
+	public ResourceType type {
+		get {
 			return _type;
 		}
-		set{
+		set {
 			_type = value;
-			foreach(Room room in rooms){
+			foreach (Room room in rooms) {
 				room.type = value;
 			}
-			room_prefab.GetComponent<Room>().type = type;
 		}
 	}
 
-	void Start(){
+	void Start ()
+	{
 //		selectables = new List<Selectable>();
-		rooms = new List<Room>();
-		SetupInitialHouse();
+		rooms = new List<Room> ();
+		SetupInitialHouse ();
 //		grid.setAllSelectable();
+		mode = Mode.IDLE;
+		Console.addConsoleFunction ("house", consoleAction);
 	}
 
-	void SetupInitialHouse(){
-		SpawnRoom(0,0);
-		SpawnRoom(1,0);
-		type = Resource.ResourceType.Wood;
-		addFamily(2);
-	}
-
-	public void SpawnRoom(int row, int col){
-		GameObject room = Instantiate(room_prefab) as GameObject;
-		grid.AssignToGrid(room,row,col);
-		room.transform.parent = transform;
-		Room rclass = room.GetComponent<Room>();
-		rooms.Add(rclass);
-		rclass.type = type;
-	}
-
-	public void BuildRooms(){
-		grid.Activate(room_prefab,Tile.TileType.None, FarmGridSpace.Location.Tile);
-		PlayerInput.SetFlag(PlayerInput.InputState.FarmAction,true);
-	}
-
-	public void SetRooms(){
-		grid.buildRoomsFromSelected(this);
-		ClearSelectables();
-	}
-
-	public void ClearSelectables(){
-		grid.Deactivate();
-		PlayerInput.SetFlag(PlayerInput.InputState.FarmAction,false);
-	}
-
-	public void addFamily(int count){
-		for(int i=0;i<count;i++){
-			AddStock(Instantiate(player_token) as GameObject);
+	void Update ()
+	{
+		if (mode == Mode.CLAIM_ROOM) {
+//			Debug.Log ("Claim");
+			UpdateSelectable ();
 		}
 	}
 
-	public int BuildCount{
-		get{
-			return grid.NumberSelected();
-		}
+	void SetupInitialHouse ()
+	{
+		type = ResourceType.Wood;
+		ClaimIndexed (0, 0);
+		ClaimIndexed (1, 0);
+		FinalizeClaims ();
+//		addFamily (2);
 	}
 
-	public override int Count{
-		get{
-			int n = 0;
-			foreach(Room room in rooms){
-				n += room.Count;
+	protected override void ReturnTileObject (Tile tile)
+	{
+		PoolManager.ReturnTile (TileMarkerType.ROOM, tile.TileObject);
+		base.ReturnTileObject (tile);
+	}
+
+	protected override void StoreComponent (Tile tile)
+	{
+		rooms.Add (tile.TileObject.GetComponent<Room> ());
+		base.StoreComponent (tile);
+	}
+
+	public override void StakeClaim (Tile tile)
+	{
+		base.StakeClaim (tile);
+		GameObject room = PoolManager.GetTile (TileMarkerType.ROOM);
+		tile.TileObject = room;
+		room.GetComponent<Room> ().type = type;
+	}
+
+	public void BuildRooms ()
+	{
+//		grid.Activate (room_prefab, Tile.TileType.None, FarmGridSpace.Location.Tile);
+//		PlayerInput.SetFlag (PlayerInput.InputState.FarmAction, true);
+		mode = Mode.CLAIM_ROOM;
+		InitializeSelectable ();
+	}
+
+	public void AcceptRooms ()
+	{
+		mode = Mode.IDLE;
+		FinalizeClaims ();
+	}
+
+	void consoleAction (string[] command)
+	{
+		if (command.Length < 1) {
+			Debug.Log ("Insufficient command length.");
+		}
+
+		string[] sub = new string[command.Length - 1];
+		for (int i = 1; i < command.Length; i++) {
+			sub [i - 1] = command [i];
+		}
+		if (command [0] == "highlight") {
+			consoleHighlight (sub);
+		} else if (command [0] == "build") {
+			BuildRooms ();
+		} else if (command [0] == "accept") {
+			AcceptRooms ();
+		} else if (command [0] == "type") {
+			if (command.Length < 2) {
+				Debug.Log ("House mode command: [wood|clay|stone]");
+				return;
 			}
-			return n;
+			switch (command [1]) {
+			case "wood":
+				type = ResourceType.Wood;
+				break;
+			case "clay":
+				type = ResourceType.Clay;
+				break;
+			case "stone":
+				type = ResourceType.Stone;
+				break;
+			}
 		}
-	}
 
-	public override void AddStock(GameObject token){
-		Room min_room = null;
-		int min_count = 1000000;
-		foreach(Room room in rooms){
-			if(room.Count < min_count){
-				min_count = room.Count;
-				min_room = room;
-			}
-		}
-		min_room.AddStock(token);
-	}
-	
-	public override GameObject PullToken(){
-		Room max_room = null;
-		int max_count = 0;
-		foreach(Room room in rooms){
-			if(room.Count > max_count){
-				max_count = room.Count;
-				max_room = room;
-			}
-		}
-		
-		if(max_room){
-			return max_room.PullToken();
-		}else{
-			Debug.Log("TokenStack.PullToken ERROR: No tokens left");
-			return null;
-		}
 	}
 }

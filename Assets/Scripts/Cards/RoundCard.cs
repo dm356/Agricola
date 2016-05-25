@@ -3,7 +3,7 @@ using System.Collections;
 
 public class RoundCard : ActionSpace {
 
-	private bool active;
+	protected bool active;
 	public MeshRenderer model;
 	public Material card_face;
 

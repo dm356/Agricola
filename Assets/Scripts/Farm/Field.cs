@@ -1,17 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Field : RecursiveStorage {
+public class Field : RecursiveStorage
+{
 
-	public void SowResource(Resource.ResourceType resource, int count){
-		GameObject token;
-		for(int i=0;i<count;i++){
+	public void SowResource (ResourceType resource, int count)
+	{
+//		GameObject token;
+		for (int i = 0; i < count; i++) {
 //			token = Instantiate(ResourceList.GetPrefab(resource)) as GameObject;
-			AddStock(ResourcePool.GetResource(resource));
+			AddStock (PoolManager.GetResource (resource));
 		}
 	}
 
-	public void HarvestResources(){
-		RemoveTokens(1);
+	public void HarvestResources ()
+	{
+		RemoveTokens (1);
 	}
 }

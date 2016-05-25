@@ -3,7 +3,7 @@ using System.Collections;
 
 public abstract class Action : MonoBehaviour {
 
-	public string name = "";
+	public string type = "";
 
 	public virtual bool Valid{
 		get{

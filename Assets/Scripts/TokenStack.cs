@@ -19,7 +19,7 @@ public class TokenStack : AbstractStorage {
 	public override void AddStock(GameObject token){
 		float height = transform.position.y;
 		foreach(GameObject item in stock){
-			height = Mathf.Max(item.transform.position.y + 2f*item.collider.bounds.extents.y,height);
+			height = Mathf.Max(item.transform.position.y + 2f*item.GetComponent<Collider>().bounds.extents.y,height);
 		}
 		height += 0.5f;
 
