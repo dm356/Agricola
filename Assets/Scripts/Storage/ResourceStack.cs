@@ -6,7 +6,9 @@ public class ResourceStack : MonoBehaviour
 {
 
 	public ResourceType type;
-	private Stack<GameObject> stack;
+	private Stack<GameObject> stack = new Stack<GameObject> ();
+	private List<Vector3> position_list = new List<Vector3> ();
+	private int position_index = 0;
 
 	private StorageCounter counter = null;
 
@@ -24,7 +26,6 @@ public class ResourceStack : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		stack = new Stack<GameObject> ();
 	}
 	
 	// Update is called once per frame
@@ -38,8 +39,20 @@ public class ResourceStack : MonoBehaviour
 		}
 	}
 
+	public void AddStackPosition (Vector3 position)
+	{
+		position_list.Add (position);
+	}
+
 	void AddResource ()
 	{
+		position_index += 1;
+		if (position_list.Count < 1) {
+			Debug.Log ("No position set.");
+			return;
+		} else if (position_index > position_list.Count - 1) {
+			position_index = 0;
+		}
 		GameObject new_item = PoolManager.GetResource (type);
 		float height = transform.position.y;
 		Vector3 itemext = new_item.GetComponent<Collider> ().bounds.extents;
@@ -48,7 +61,7 @@ public class ResourceStack : MonoBehaviour
 		}
 		height += 0.5f;
 
-		new_item.transform.position = transform.position + transform.up * height;
+		new_item.transform.position = transform.position + transform.up * height + position_list [position_index];
 		new_item.transform.rotation = transform.rotation;
 		new_item.transform.SetParent (transform);
 		stack.Push (new_item);

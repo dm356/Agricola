@@ -1,6 +1,3 @@
-Heirarchical ResourceStorage
-Top layer distributes incoming resources
-Lower layer keeps track of count per tower (and implements caps (for pastures and the like))
-Done
-
-Turn Manager
+Hover descriptions for all actions (and whatever else makes sense)
+- Should change based on circumstances (claimed by player, adjusted by improvement)
+- Can do different text color for changes

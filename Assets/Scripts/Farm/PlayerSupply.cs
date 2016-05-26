@@ -6,12 +6,12 @@ public class PlayerSupply : MonoBehaviour
 {
 
 	public GameObject storagePrefab;
-	private Dictionary<ResourceType,StorageCounter> storage;
+	private Dictionary<ResourceType,StorageCounter> storage = new Dictionary<ResourceType, StorageCounter> ();
 	public float spacing;
 
-	void Awake ()
+	void Start ()
 	{
-		storage = new Dictionary<ResourceType, StorageCounter> ();
+		Console.addConsoleFunction ("supply", consoleAction);
 		spawnStorage (ResourceType.Wood, -3f * spacing);
 		spawnStorage (ResourceType.Clay, -2f * spacing);
 		spawnStorage (ResourceType.Stone, -1f * spacing);
@@ -21,17 +21,15 @@ public class PlayerSupply : MonoBehaviour
 		spawnStorage (ResourceType.Food, 3f * spacing);
 	}
 
-	void Start ()
-	{
-		Console.addConsoleFunction ("supply", consoleAction);
-	}
-
 	void spawnStorage (ResourceType resource, float x)
 	{
 		GameObject storage_box = Instantiate (storagePrefab, transform.position + Vector3.right * x, transform.rotation) as GameObject;
 		storage_box.transform.SetParent (transform);
 		ResourceStack component = storage_box.GetComponent<ResourceStack> ();
 		component.type = resource;
+		component.AddStackPosition (new Vector3 (1.7f, 0f, -1.6f));
+		component.AddStackPosition (new Vector3 (-1.7f, 0f, -1.6f));
+		component.AddStackPosition (new Vector3 (0f, 0f, 2f));
 //		if (storage.ContainsKey (resource) && storage [resource]) {
 ////			ResourcePool.ReturnResource(storage[resource]);
 //			Destroy (storage [resource]);
